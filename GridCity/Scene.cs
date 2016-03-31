@@ -23,9 +23,9 @@ namespace GridCity {
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 17u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 16u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 15u))));
-            street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 14u))));
-            street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 13u))));
-            street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 12u))));
+            street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 14u))));
+            street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 13u))));
+            street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 12u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 11u))));
             street0.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.TWOSEVENTY, new GlobalCoordinate(2u, 10u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 9u))));
@@ -40,14 +40,14 @@ namespace GridCity {
 
             List<ConnectableField> street1 = new List<ConnectableField>();
             street1.Add(Grid.setField(Factory.getRoad("EndRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 18u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 17u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 16u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 15u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 14u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 13u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 12u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 11u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 10u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 17u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 16u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 15u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 14u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 13u))));
+            street1.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.TWOSEVENTY, new GlobalCoordinate(10u, 12u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 11u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 10u))));
             street1.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(10u, 9u))));
             street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 8u))));
             street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 7u))));
@@ -76,10 +76,19 @@ namespace GridCity {
             street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(6u, 10u))));
             street3.Add(Grid.setField(Factory.getRoad("Curve", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(7u, 10u))));
             street3.Add(Grid.setField(Factory.getRoad("Curve", ConnectableField.Orientation_CW.ONEEIGHTY, new GlobalCoordinate(7u, 9u))));
-            street3.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(8u, 9u))));
+            street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(8u, 9u))));
             street3.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(9u, 9u))));
             street3.Add(street1[9]);
             ConnectableField.connect(street3);
+
+            List<ConnectableField> street4 = new List<ConnectableField>();
+            street4.Add(Grid.getField<ConnectableField>(new GlobalCoordinate(10, 12)));
+            street4.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(11, 12))));
+            street4.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(12, 12))));
+            street4.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(13, 12))));
+            street4.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(14, 12))));
+            street4.Add(Grid.setField(Factory.getRoad("EndRoad", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(15, 12))));
+            ConnectableField.connect(street4);
         }
         private bool connectBuilding(ConnectableField bld, ConnectableField.Orientation_CW orientation, uint x, uint y) {
             switch (orientation) {
@@ -107,9 +116,42 @@ namespace GridCity {
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 17);
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 16);
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 15);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 14);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 12);
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 17);
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 16);
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 15);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 14);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 12);
+
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 17);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 16);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 15);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 14);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 17);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 16);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 15);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 14);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 13);
+
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 12, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 13, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 14, 13);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 12, 11);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 13, 11);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 14, 11);
+
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 10);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 10);
+
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 8, 8);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 8, 10);
+
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 5);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 3, 11);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 4, 11);

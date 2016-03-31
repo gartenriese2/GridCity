@@ -12,7 +12,7 @@ using System.Linq;
 namespace GridCity {
     class Game {
         private Grid Grid { get; }
-        private Date Date { get; } = new Date();
+        private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
         private Window Window { get; }
         private Program Prog { get; }
         private Quad Quad { get; }
