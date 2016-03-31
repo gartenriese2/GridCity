@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<types>
+  <!--EndRoads-->
+  <type name="EndRoad">
+    <nodes>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="0.125" y="0.875" type="Pedestrian"></node>
+      <node x="0.375" y="0.625" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.875" y="0.875" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="4" type="Pedestrian"></path>
+      <path from="4" to="0" type="Pedestrian"></path>
+      <path from="4" to="7" type="Pedestrian"></path>
+      <path from="7" to="4" type="Pedestrian"></path>
+      <path from="3" to="7" type="Pedestrian"></path>
+      <path from="7" to="3" type="Pedestrian"></path>
+      <path from="2" to="6" type="CarSmallStreet"></path>
+      <path from="6" to="5" type="CarSmallStreet"></path>
+      <path from="5" to="1" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <!--StraightRoads-->
+  <type name="StraightRoad">
+    <nodes>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="0.875" y="1" type="Pedestrian"></node>
+      <node x="0.625" y="1" type="Car"></node>
+      <node x="0.375" y="1" type="Car"></node>
+      <node x="0.125" y="1" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="7" type="Pedestrian"></path>
+      <path from="7" to="0" type="Pedestrian"></path>
+      <path from="3" to="4" type="Pedestrian"></path>
+      <path from="4" to="3" type="Pedestrian"></path>
+      <path from="2" to="5" type="CarSmallStreet"></path>
+      <path from="6" to="1" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <type name="StraightRoadWithBuildingAccess">
+    <nodes>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="0.875" y="1" type="Pedestrian"></node>
+      <node x="0.625" y="1" type="Car"></node>
+      <node x="0.375" y="1" type="Car"></node>
+      <node x="0.125" y="1" type="Pedestrian"></node>
+      <node x="0" y="0.625" type="Pedestrian"></node>
+      <node x="0" y="0.375" type="Car"></node>
+      <node x="0.125" y="0.625" type="Pedestrian"></node>
+      <node x="0.375" y="0.375" type="Car"></node>
+      <node x="0.375" y="0.625" type="Car"></node>
+      <node x="0.625" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.875" y="0.375" type="Pedestrian"></node>
+      <node x="1" y="0.375" type="Pedestrian"></node>
+      <node x="1" y="0.625" type="Car"></node>
+    </nodes>
+    <paths>
+      <!--left pedwalk-->
+      <path from="0" to="10" type="Pedestrian"></path>
+      <path from="10" to="0" type="Pedestrian"></path>
+      <path from="10" to="7" type="Pedestrian"></path>
+      <path from="7" to="10" type="Pedestrian"></path>
+      <path from="8" to="10" type="Pedestrian"></path>
+      <path from="10" to="8" type="Pedestrian"></path>
+      <!--right pedwalk-->
+      <path from="3" to="15" type="Pedestrian"></path>
+      <path from="15" to="3" type="Pedestrian"></path>
+      <path from="15" to="4" type="Pedestrian"></path>
+      <path from="4" to="15" type="Pedestrian"></path>
+      <path from="16" to="15" type="Pedestrian"></path>
+      <path from="15" to="16" type="Pedestrian"></path>
+      <!--right lane-->
+      <path from="2" to="13" type="CarSmallStreet"></path>
+      <path from="13" to="14" type="CarSmallStreet"></path>
+      <path from="14" to="5" type="CarSmallStreet"></path>
+      <!--left lane-->
+      <path from="6" to="12" type="CarSmallStreet"></path>
+      <path from="12" to="11" type="CarSmallStreet"></path>
+      <path from="11" to="1" type="CarSmallStreet"></path>
+      <!--left building car entrance-->
+      <path from="9" to="11" type="CarInBuilding"></path>
+      <path from="11" to="9" type="CarInBuilding"></path>
+      <path from="9" to="13" type="CarInBuilding"></path>
+      <path from="13" to="9" type="CarInBuilding"></path>
+      <!--right building car entrance-->
+      <path from="17" to="14" type="CarInBuilding"></path>
+      <path from="14" to="17" type="CarInBuilding"></path>
+      <path from="17" to="12" type="CarInBuilding"></path>
+      <path from="12" to="17" type="CarInBuilding"></path>
+    </paths>
+  </type>
+  <!--TCrossings-->
+  <type name="TCrossing">
+    <nodes>
+      <node x="0" y="0.875" type="Pedestrian"></node>
+      <node x="0" y="0.625" type="Car"></node>
+      <node x="0" y="0.375" type="Car"></node>
+      <node x="0" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="1" y="0.125" type="Pedestrian"></node>
+      <node x="1" y="0.375" type="Car"></node>
+      <node x="1" y="0.625" type="Car"></node>
+      <node x="1" y="0.875" type="Pedestrian"></node>
+      <node x="0.375" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.375" y="0.625" type="Car"></node>
+      <node x="0.875" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0.125" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="3" to="17" type="Pedestrian"></path>
+      <path from="17" to="3" type="Pedestrian"></path>
+      <path from="17" to="4" type="Pedestrian"></path>
+      <path from="4" to="17" type="Pedestrian"></path>
+      <path from="7" to="16" type="Pedestrian"></path>
+      <path from="16" to="7" type="Pedestrian"></path>
+      <path from="16" to="8" type="Pedestrian"></path>
+      <path from="8" to="16" type="Pedestrian"></path>
+      <path from="11" to="0" type="Pedestrian"></path>
+      <path from="0" to="11" type="Pedestrian"></path>
+      <path from="2" to="12" type="CarSmallStreet"></path>
+      <path from="12" to="5" type="CarSmallStreet"></path>
+      <path from="6" to="13" type="CarSmallStreet"></path>
+      <path from="13" to="9" type="CarSmallStreet"></path>
+      <path from="10" to="14" type="CarSmallStreet"></path>
+      <path from="15" to="1" type="CarSmallStreet"></path>
+      <path from="12" to="13" type="CarSmallStreet"></path>
+      <path from="13" to="14" type="CarSmallStreet"></path>
+      <path from="14" to="15" type="CarSmallStreet"></path>
+      <path from="15" to="12" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <type name="TCrossingWithCrosswalks">
+    <nodes>
+      <node x="0" y="0.875" type="Pedestrian"></node>
+      <node x="0" y="0.625" type="Car"></node>
+      <node x="0" y="0.375" type="Car"></node>
+      <node x="0" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="1" y="0.125" type="Pedestrian"></node>
+      <node x="1" y="0.375" type="Car"></node>
+      <node x="1" y="0.625" type="Car"></node>
+      <node x="1" y="0.875" type="Pedestrian"></node>
+      <node x="0.375" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.375" y="0.625" type="Car"></node>
+      <node x="0.875" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0.875" type="Pedestrian"></node>
+      <node x="0.875" y="0.875" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="3" to="17" type="Pedestrian"></path>
+      <path from="17" to="3" type="Pedestrian"></path>
+      <path from="17" to="4" type="Pedestrian"></path>
+      <path from="4" to="17" type="Pedestrian"></path>
+      <path from="7" to="16" type="Pedestrian"></path>
+      <path from="16" to="7" type="Pedestrian"></path>
+      <path from="16" to="8" type="Pedestrian"></path>
+      <path from="8" to="16" type="Pedestrian"></path>
+      <path from="11" to="19" type="Pedestrian"></path>
+      <path from="19" to="11" type="Pedestrian"></path>
+      <path from="19" to="18" type="Pedestrian"></path>
+      <path from="18" to="19" type="Pedestrian"></path>
+      <path from="18" to="0" type="Pedestrian"></path>
+      <path from="0" to="18" type="Pedestrian"></path>
+      <path from="18" to="17" type="Pedestrian"></path>
+      <path from="17" to="18" type="Pedestrian"></path>
+      <path from="19" to="16" type="Pedestrian"></path>
+      <path from="16" to="19" type="Pedestrian"></path>
+      <path from="17" to="16" type="Pedestrian"></path>
+      <path from="16" to="17" type="Pedestrian"></path>
+      <path from="2" to="12" type="CarSmallStreet"></path>
+      <path from="12" to="5" type="CarSmallStreet"></path>
+      <path from="6" to="13" type="CarSmallStreet"></path>
+      <path from="13" to="9" type="CarSmallStreet"></path>
+      <path from="10" to="14" type="CarSmallStreet"></path>
+      <path from="15" to="1" type="CarSmallStreet"></path>
+      <path from="12" to="13" type="CarSmallStreet"></path>
+      <path from="13" to="14" type="CarSmallStreet"></path>
+      <path from="14" to="15" type="CarSmallStreet"></path>
+      <path from="15" to="12" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <!--XCrossings-->
+  <type name="XCrossing">
+    <nodes>
+      <node x="0" y="0.875" type="Pedestrian"></node>
+      <node x="0" y="0.625" type="Car"></node>
+      <node x="0" y="0.375" type="Car"></node>
+      <node x="0" y="0.125" type="Pedestrian"></node>
+      <node x="0.875" y="1" type="Pedestrian"></node>
+      <node x="0.625" y="1" type="Car"></node>
+      <node x="0.375" y="1" type="Car"></node>
+      <node x="0.125" y="1" type="Pedestrian"></node>
+      <node x="1" y="0.125" type="Pedestrian"></node>
+      <node x="1" y="0.375" type="Car"></node>
+      <node x="1" y="0.625" type="Car"></node>
+      <node x="1" y="0.875" type="Pedestrian"></node>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0.375" type="Car"></node>
+      <node x="0.375" y="0.625" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.625" y="0.375" type="Car"></node>
+      <node x="0.125" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0.875" type="Pedestrian"></node>
+      <node x="0.875" y="0.875" type="Pedestrian"></node>
+      <node x="0.875" y="0.125" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="3" to="20" type="Pedestrian"></path>
+      <path from="20" to="3" type="Pedestrian"></path>
+      <path from="20" to="12" type="Pedestrian"></path>
+      <path from="12" to="20" type="Pedestrian"></path>
+      <path from="0" to="21" type="Pedestrian"></path>
+      <path from="21" to="0" type="Pedestrian"></path>
+      <path from="21" to="7" type="Pedestrian"></path>
+      <path from="7" to="21" type="Pedestrian"></path>
+      <path from="4" to="22" type="Pedestrian"></path>
+      <path from="22" to="4" type="Pedestrian"></path>
+      <path from="22" to="11" type="Pedestrian"></path>
+      <path from="11" to="22" type="Pedestrian"></path>
+      <path from="8" to="23" type="Pedestrian"></path>
+      <path from="23" to="8" type="Pedestrian"></path>
+      <path from="23" to="15" type="Pedestrian"></path>
+      <path from="15" to="23" type="Pedestrian"></path>
+      <path from="2" to="16" type="CarSmallStreet"></path>
+      <path from="17" to="1" type="CarSmallStreet"></path>
+      <path from="6" to="17" type="CarSmallStreet"></path>
+      <path from="18" to="5" type="CarSmallStreet"></path>
+      <path from="10" to="18" type="CarSmallStreet"></path>
+      <path from="19" to="9" type="CarSmallStreet"></path>
+      <path from="14" to="19" type="CarSmallStreet"></path>
+      <path from="16" to="13" type="CarSmallStreet"></path>
+      <path from="16" to="19" type="CarSmallStreet"></path>
+      <path from="17" to="16" type="CarSmallStreet"></path>
+      <path from="18" to="17" type="CarSmallStreet"></path>
+      <path from="19" to="18" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <!--Curve-->
+  <type name="Curve">
+    <nodes>
+      <node x="0.125" y="0" type="Pedestrian"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Car"></node>
+      <node x="0.875" y="0" type="Pedestrian"></node>
+      <node x="0" y="0.875" type="Pedestrian"></node>
+      <node x="0" y="0.625" type="Car"></node>
+      <node x="0" y="0.375" type="Car"></node>
+      <node x="0" y="0.125" type="Pedestrian"></node>
+      <node x="0.125" y="0.125" type="Pedestrian"></node>
+      <node x="0.375" y="0.375" type="Car"></node>
+      <node x="0.625" y="0.625" type="Car"></node>
+      <node x="0.875" y="0.875" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="8" type="Pedestrian"></path>
+      <path from="8" to="0" type="Pedestrian"></path>
+      <path from="8" to="7" type="Pedestrian"></path>
+      <path from="7" to="8" type="Pedestrian"></path>
+      <path from="3" to="11" type="Pedestrian"></path>
+      <path from="11" to="3" type="Pedestrian"></path>
+      <path from="11" to="4" type="Pedestrian"></path>
+      <path from="4" to="11" type="Pedestrian"></path>
+      <path from="2" to="10" type="CarSmallStreet"></path>
+      <path from="10" to="5" type="CarSmallStreet"></path>
+      <path from="6" to="9" type="CarSmallStreet"></path>
+      <path from="9" to="1" type="CarSmallStreet"></path>
+    </paths>
+  </type>
+  <!--Building-->
+  <type name="SmallResidentialBuilding">
+    <occupations min="1" max="2"></occupations>
+    <nodes>
+      <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.5" type="Garage"></node>
+      <node x="0.625" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.25" type="CarPrivate"></node>
+      <node x="0.625" y="0.25" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="1" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="0" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="2" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="3" type="CarInBuilding" hidden="yes"></path>
+      <path from="3" to="1" type="CarInBuilding" hidden="yes"></path>
+      <path from="2" to="4" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="4" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="5" to="3" type="CarInBuilding"></path>
+      <path from="3" to="5" type="CarInBuilding"></path>
+      <path from="6" to="4" type="PedestrianInBuilding"></path>
+      <path from="4" to="6" type="PedestrianInBuilding"></path>
+    </paths>
+  </type>
+  <type name="MediumResidentialBuilding">
+    <occupations min="4" max="24"></occupations>
+    <nodes>
+      <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.5" type="Garage"></node>
+      <node x="0.625" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.125" type="CarPrivate"></node>
+      <node x="0.625" y="0.125" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="1" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="0" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="2" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="3" type="CarInBuilding" hidden="yes"></path>
+      <path from="3" to="1" type="CarInBuilding" hidden="yes"></path>
+      <path from="2" to="4" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="4" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="5" to="3" type="CarInBuilding"></path>
+      <path from="3" to="5" type="CarInBuilding"></path>
+      <path from="6" to="4" type="PedestrianInBuilding"></path>
+      <path from="4" to="6" type="PedestrianInBuilding"></path>
+    </paths>
+  </type>
+  <type name="WorkBuilding">
+    <occupations min="20" max="60"></occupations>
+    <nodes>
+      <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.5" type="Garage"></node>
+      <node x="0.625" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.125" type="CarPrivate"></node>
+      <node x="0.625" y="0.125" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="1" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="0" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="2" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="3" type="CarInBuilding" hidden="yes"></path>
+      <path from="3" to="1" type="CarInBuilding" hidden="yes"></path>
+      <path from="2" to="4" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="4" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="5" to="3" type="CarInBuilding"></path>
+      <path from="3" to="5" type="CarInBuilding"></path>
+      <path from="6" to="4" type="PedestrianInBuilding"></path>
+      <path from="4" to="6" type="PedestrianInBuilding"></path>
+    </paths>
+  </type>
+  <type name="SchoolBuilding">
+    <occupations min="100" max="200"></occupations>
+    <nodes>
+      <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.5" type="Garage"></node>
+      <node x="0.625" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.125" type="CarPrivate"></node>
+      <node x="0.625" y="0.125" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="1" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="0" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="2" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="3" type="CarInBuilding" hidden="yes"></path>
+      <path from="3" to="1" type="CarInBuilding" hidden="yes"></path>
+      <path from="2" to="4" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="4" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="5" to="3" type="CarInBuilding"></path>
+      <path from="3" to="5" type="CarInBuilding"></path>
+      <path from="6" to="4" type="PedestrianInBuilding"></path>
+      <path from="4" to="6" type="PedestrianInBuilding"></path>
+    </paths>
+  </type>
+</types>

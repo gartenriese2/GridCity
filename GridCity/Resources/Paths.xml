@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<paths>
+  <path name="PedestrianInBuilding">
+    <type>PEDESTRIAN</type>
+    <speed>1.4</speed>
+  </path>
+  <path name="Pedestrian">
+    <type>PEDESTRIAN</type>
+    <speed>2.2</speed>
+  </path>
+  <path name="CarInBuilding">
+    <type>CAR</type>
+    <speed>2.8</speed>
+  </path>
+  <path name="CarSmallStreet">
+    <type>CAR</type>
+    <speed>8.3</speed>
+  </path>
+</paths>

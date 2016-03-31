@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<types>
+  <type name="Pedestrian">
+    <allowed>PEDESTRIAN</allowed>
+    <public>YES</public>
+  </type>
+  <type name="PedestrianPrivate">
+    <allowed>PEDESTRIAN</allowed>
+    <public>NO</public>
+  </type>
+  <type name="Car">
+    <allowed>CAR</allowed>
+    <public>YES</public>
+  </type>
+  <type name="CarPrivate">
+    <allowed>CAR</allowed>
+    <public>NO</public>
+  </type>
+  <type name="CarParking">
+    <allowed>CAR</allowed>
+    <allowed>PEDESTRIAN</allowed>
+    <public>YES</public>
+  </type>
+  <type name="CarParkingPrivate">
+    <allowed>CAR</allowed>
+    <allowed>PEDESTRIAN</allowed>
+    <public>NO</public>
+  </type>
+  <type name="Garage">
+    <allowed>CAR</allowed>
+    <allowed>PEDESTRIAN</allowed>
+    <public>NO</public>
+    <penalty type="CAR">15</penalty>
+    <penalty type="PEDESTRIAN">30</penalty>
+  </type>
+</types>
