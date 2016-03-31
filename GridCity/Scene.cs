@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System;
 using GridCity.People;
 using GridCity.Utility;
-using System.Diagnostics.Contracts;
 using System.Diagnostics;
 
 namespace GridCity {
@@ -55,7 +54,7 @@ namespace GridCity {
             street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 11u))));
             street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 10u))));
             street1.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(10u, 9u))));
-            street1.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 8u))));
+            street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 8u))));
             street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 7u))));
             street1.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(10u, 6u))));
             street1.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(10u, 5u))));
@@ -127,12 +126,15 @@ namespace GridCity {
             addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 6, 9);
             addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 9);
             addBuilding<School>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 7);
+            addBuilding<University>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 8);
             addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 7);
+            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 8);
         }
         private void initOccupations() {
             var rbs = Grid.getFields<ResidentialBuilding>();
             var wbs = Grid.getFields<WorkBuilding>();
             var sbs = Grid.getFields<School>();
+            var ubs = Grid.getFields<University>();
             foreach (var rb in rbs) {
                 foreach (var household in rb.Households) {
                     foreach (var resident in household.Residents) {
@@ -143,6 +145,10 @@ namespace GridCity {
                         } else if (resident is Teen) {
                             if (!((Teen)resident).findOccupation(sbs)) {
                                 Console.WriteLine("Teen did not find a school!");
+                            }
+                        } else if (resident is Student) {
+                            if (!((Student)resident).findOccupation(ubs)) {
+                                Console.WriteLine("Student did not find a university!");
                             }
                         }
                     }

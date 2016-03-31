@@ -24,6 +24,11 @@ namespace GridCity.Fields.Buildings {
         public School(string name, Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, uint numJobs) : base(name, pos, layout, orientation, numJobs) {
         }
     }
+    class University : OccupationalBuilding {
+        public University() : base() { }
+        public University(string name, Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, uint numJobs) : base(name, pos, layout, orientation, numJobs) {
+        }
+    }
     class WorkBuilding : OccupationalBuilding {
         public WorkBuilding() : base() { }
         public WorkBuilding(string name, Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, uint numJobs) : base(name, pos, layout, orientation, numJobs) {

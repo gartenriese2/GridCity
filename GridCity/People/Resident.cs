@@ -156,8 +156,73 @@ namespace GridCity.People {
             return false;
         }
     }
-    class Student : Resident {
+    class Student : Occupant {
         public Student(ResidentialBuilding home) : base(home) {
+        }
+
+        public override bool findOccupation<U>(List<U> buildings) {
+            var map = new Dictionary<U, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
+            foreach (var building in buildings.Where(x => x.HasOpenOccupations)) {
+                var idx = Traveller.Keys.Count;
+                Traveller.Keys.AddRange(building.Nodes);
+                var pathTo = Pathfinding.Pathfinder.findQuickestPath(Home, building, Traveller);
+                var pathFrom = Pathfinding.Pathfinder.findQuickestPath(building, Home, Traveller);
+                Traveller.Keys.RemoveRange(idx, building.Nodes.Count);
+                if (pathTo != null && pathFrom != null) {
+                    map.Add(building, Tuple.Create(pathTo, pathFrom));
+                }
+            }
+            var orderedMap = map.OrderBy(x => (x.Value.Item1.Item2 + x.Value.Item2.Item2).Seconds);
+            for (int i = 0; i < orderedMap.Count(); ++i) {
+                if (i == orderedMap.Count() - 1 || Utility.RandomGenerator.get() < 0.5) {
+                    var mapEntry = orderedMap.ElementAt(i);
+                    var building = mapEntry.Key;
+                    Occupation occupation = building.FirstOpenOccupation;
+                    occupation.occupy(this);
+                    setOccupation(occupation);
+                    PathToOccupation = mapEntry.Value.Item1.Item1;
+                    PathFromOccupation = mapEntry.Value.Item2.Item1;
+
+                    // set activities
+                    Time timeToOccupation = mapEntry.Value.Item1.Item2;
+                    List<Clock> possibleStartTimes = new List<Clock> { new Clock(8), new Clock(8, 15), new Clock(8, 30), new Clock(10), new Clock(10, 15), new Clock(10, 30) };
+                    List<Clock> possibleEndTimes = new List<Clock> { new Clock(11, 30), new Clock(11, 45), new Clock(12), new Clock(13, 30), new Clock(13, 45), new Clock(14), new Clock(15, 30), new Clock(15, 45), new Clock(16), new Clock(17, 30), new Clock(17, 45), new Clock(18) };
+                    // monday
+                    if (Utility.RandomGenerator.get() < 0.9) {
+                        var to = Utility.RandomGenerator.getFromList(possibleStartTimes) - timeToOccupation;
+                        var from = Utility.RandomGenerator.getFromList(possibleEndTimes);
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.createRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.createRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                    }
+                    if (Utility.RandomGenerator.get() < 0.9) {
+                        var to = Utility.RandomGenerator.getFromList(possibleStartTimes) - timeToOccupation;
+                        var from = Utility.RandomGenerator.getFromList(possibleEndTimes);
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.createRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.createRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                    }
+                    if (Utility.RandomGenerator.get() < 0.9) {
+                        var to = Utility.RandomGenerator.getFromList(possibleStartTimes) - timeToOccupation;
+                        var from = Utility.RandomGenerator.getFromList(possibleEndTimes);
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.createRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.createRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                    }
+                    if (Utility.RandomGenerator.get() < 0.9) {
+                        var to = Utility.RandomGenerator.getFromList(possibleStartTimes) - timeToOccupation;
+                        var from = Utility.RandomGenerator.getFromList(possibleEndTimes);
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.createRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.createRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                    }
+                    if (Utility.RandomGenerator.get() < 0.5) {
+                        var to = Utility.RandomGenerator.getFromList(possibleStartTimes) - timeToOccupation;
+                        var from = Utility.RandomGenerator.getFromList(possibleEndTimes);
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.createRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
+                        Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.createRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                    }
+
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

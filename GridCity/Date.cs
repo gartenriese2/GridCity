@@ -16,7 +16,7 @@ namespace GridCity {
         public int Minute => ((int)Math.Floor((float)Time) % 3600) / 60;
         public int Second => (int)Math.Floor((float)Time) % 60;
         readonly float k_secondsADay = 60 * 60 * 24;
-        public Clock(uint hour, uint minute, uint second) {
+        public Clock(uint hour, uint minute = 0, uint second = 0) {
             Contract.Requires(minute < 60 && second < 60);
             Time.Seconds = second + 60 * minute + 3600 * hour;
             if (Time.Seconds > k_secondsADay) {
