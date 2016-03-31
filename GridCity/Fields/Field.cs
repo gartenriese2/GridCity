@@ -11,7 +11,6 @@ namespace GridCity.Fields {
         public static readonly uint k_scale = 8;
         public bool IsEmpty { get; protected set; } = true;
         protected Utility.GlobalCoordinate Position { get; set; }
-        public Field() { }
         public Field(uint x, uint y) {
             IsEmpty = true;
             Position = new Utility.GlobalCoordinate(x, y);

@@ -8,7 +8,6 @@ namespace GridCity.Fields {
         public enum Orientation_CW { ZERO, NINETY, ONEEIGHTY, TWOSEVENTY };
         private BaseNodeLayout BaseLayout { get; }
         public List<Node> Nodes { get; set; } = new List<Node>();
-        public ConnectableField() : base() { }
         protected ConnectableField(Utility.GlobalCoordinate pos, BaseNodeLayout layout, Orientation_CW orientation) : base(pos.X, pos.Y) {
             IsEmpty = false;
             BaseLayout = layout;

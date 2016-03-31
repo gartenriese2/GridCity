@@ -294,7 +294,7 @@
   </type>
   <!--Building-->
   <type name="SmallResidentialBuilding">
-    <occupations min="1" max="2"></occupations>
+    <households min="1" max="2"></households>
     <nodes>
       <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
       <node x="0.375" y="0.5" type="Garage"></node>
@@ -320,7 +320,7 @@
     </paths>
   </type>
   <type name="MediumResidentialBuilding">
-    <occupations min="4" max="24"></occupations>
+    <households min="4" max="24"></households>
     <nodes>
       <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
       <node x="0.375" y="0.5" type="Garage"></node>
@@ -346,7 +346,7 @@
     </paths>
   </type>
   <type name="WorkBuilding">
-    <occupations min="20" max="60"></occupations>
+    <occupations type="WORKER" min="20" max="60"></occupations>
     <nodes>
       <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
       <node x="0.375" y="0.5" type="Garage"></node>
@@ -372,7 +372,35 @@
     </paths>
   </type>
   <type name="SchoolBuilding">
-    <occupations min="100" max="200"></occupations>
+    <occupations type="TEEN" min="100" max="200"></occupations>
+    <occupations type="WORKER" min="8" max="16"></occupations>
+    <nodes>
+      <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.5" type="Garage"></node>
+      <node x="0.625" y="0.5" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0.125" type="CarPrivate"></node>
+      <node x="0.625" y="0.125" type="PedestrianPrivate"></node>
+      <node x="0.375" y="0" type="Car"></node>
+      <node x="0.625" y="0" type="Pedestrian"></node>
+    </nodes>
+    <paths>
+      <path from="0" to="1" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="0" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="2" to="0" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="1" to="3" type="CarInBuilding" hidden="yes"></path>
+      <path from="3" to="1" type="CarInBuilding" hidden="yes"></path>
+      <path from="2" to="4" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="4" to="2" type="PedestrianInBuilding" hidden="yes"></path>
+      <path from="5" to="3" type="CarInBuilding"></path>
+      <path from="3" to="5" type="CarInBuilding"></path>
+      <path from="6" to="4" type="PedestrianInBuilding"></path>
+      <path from="4" to="6" type="PedestrianInBuilding"></path>
+    </paths>
+  </type>
+  <type name="UniversityBuilding">
+    <occupations type="STUDENT" min="200" max="400"></occupations>
+    <occupations type="WORKER" min="20" max="50"></occupations>
     <nodes>
       <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
       <node x="0.375" y="0.5" type="Garage"></node>

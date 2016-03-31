@@ -5,6 +5,7 @@ using System;
 using GridCity.People;
 using GridCity.Utility;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GridCity {
     class Scene {
@@ -17,12 +18,6 @@ namespace GridCity {
             initOccupations();
         }
         private void initRoads() {
-            BorderConfig end = new BorderConfig(BorderType.NONE, BorderType.NONE, BorderType.NONE, BorderType.ROAD);
-            BorderConfig straight = new BorderConfig(BorderType.NONE, BorderType.ROAD, BorderType.NONE, BorderType.ROAD);
-            BorderConfig straightWithBuilding = new BorderConfig(BorderType.BUILDING, BorderType.ROAD, BorderType.BUILDING, BorderType.ROAD);
-            BorderConfig t = new BorderConfig(BorderType.ROAD, BorderType.NONE, BorderType.ROAD, BorderType.ROAD);
-            BorderConfig c = new BorderConfig(BorderType.ROAD, BorderType.NONE, BorderType.NONE, BorderType.ROAD);
-
             List<ConnectableField> street0 = new List<ConnectableField>();
             street0.Add(Grid.setField(Factory.getRoad("EndRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 18u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 17u))));
@@ -86,55 +81,55 @@ namespace GridCity {
             street3.Add(street1[9]);
             ConnectableField.connect(street3);
         }
-        private bool addBuilding<T>(string name, ConnectableField.Orientation_CW orientation, uint x, uint y) where T : Building {
-            var bld = (ConnectableField)Grid.setField(Factory.get<T>(name, orientation, new GlobalCoordinate(x, y)));
-            bool success = false;
+        private bool connectBuilding(ConnectableField bld, ConnectableField.Orientation_CW orientation, uint x, uint y) {
             switch (orientation) {
                 case ConnectableField.Orientation_CW.NINETY:
-                    success = bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x - 1, y)));
-                    break;
+                    return bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x - 1, y)));
                 case ConnectableField.Orientation_CW.ONEEIGHTY:
-                    success = bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x, y + 1)));
-                    break;
+                    return bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x, y + 1)));
                 case ConnectableField.Orientation_CW.TWOSEVENTY:
-                    success = bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x + 1, y)));
-                    break;
+                    return bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x + 1, y)));
                 case ConnectableField.Orientation_CW.ZERO:
-                    success = bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x, y - 1)));
-                    break;
+                    return bld.connectTo(Grid.getField<ConnectableField>(new GlobalCoordinate(x, y - 1)));
                 default:
                     throw new ArgumentOutOfRangeException("orientation", "Unknown enum");
             }
-            Debug.Assert(success, "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
-            return success;
+        }
+        private void addResidentialBuilding(string name, ConnectableField.Orientation_CW orientation, uint x, uint y) {
+            var bld = (ConnectableField)Grid.setField(Factory.getResidentialBuilding(name, orientation, new GlobalCoordinate(x, y)));
+            Debug.Assert(connectBuilding(bld, orientation, x, y), "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
+        }
+        private void addOccupationalBuilding<T>(string name, ConnectableField.Orientation_CW orientation, uint x, uint y) where T : OccupationalBuilding {
+            var bld = (ConnectableField)Grid.setField(Factory.getOccupationalBuilding<T>(name, orientation, new GlobalCoordinate(x, y)));
+            Debug.Assert(connectBuilding(bld, orientation, x, y), "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
         }
         private void initBuildings() {
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 17);
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 16);
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 15);
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 17);
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 16);
-            addBuilding<ResidentialBuilding>("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 15);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 5);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 3, 11);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 4, 11);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 5, 11);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 6, 11);
-            addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.NINETY, 3, 9);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 4, 9);
-            addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 5, 9);
-            addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 6, 9);
-            addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 9);
-            addBuilding<School>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 7);
-            addBuilding<University>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 8);
-            addBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 7);
-            addBuilding<ResidentialBuilding>("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 8);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 17);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 16);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 15);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 17);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 16);
+            addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 3, 15);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 5);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 3, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 4, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 5, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 6, 11);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.NINETY, 3, 9);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 4, 9);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 5, 9);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 6, 9);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 9);
+            addOccupationalBuilding<School>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 7);
+            addOccupationalBuilding<University>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 8);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 7);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 8);
         }
         private void initOccupations() {
             var rbs = Grid.getFields<ResidentialBuilding>();
-            var wbs = Grid.getFields<WorkBuilding>();
-            var sbs = Grid.getFields<School>();
-            var ubs = Grid.getFields<University>();
+            var wbs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.WORKER)).ToList();
+            var sbs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList(); ;
+            var ubs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.STUDENT)).ToList();
             foreach (var rb in rbs) {
                 foreach (var household in rb.Households) {
                     foreach (var resident in household.Residents) {

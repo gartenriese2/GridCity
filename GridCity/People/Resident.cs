@@ -6,6 +6,19 @@ using GridCity.Utility.Units;
 
 namespace GridCity.People {
     abstract class Resident {
+        public enum Type { WORKER, TEEN, STUDENT }
+        public static Type stringToType(string str) {
+            if (str == "WORKER") {
+                return Type.WORKER;
+            }
+            if (str == "TEEN") {
+                return Type.TEEN;
+            }
+            if (str == "STUDENT") {
+                return Type.STUDENT;
+            }
+            throw new ArgumentOutOfRangeException("str", "enum not implemented");
+        }
         public ResidentialBuilding Home { get; protected set; }
         public Traveller Traveller { get; } = Traveller.Create();
         public Agent Agent { get; set; } = Agent.create();
@@ -42,15 +55,15 @@ namespace GridCity.People {
             Occupation = occupation;
             return true;
         }
-        abstract public bool findOccupation<U>(List<U> buildings) where U : OccupationalBuilding;
+        abstract public bool findOccupation(List<OccupationalBuilding> buildings);
     }
     class Worker : Occupant {
         public Worker(ResidentialBuilding home) : base(home) {
             Traveller.NonReusableTypes.Add(Pathfinding.NodeInfo.AllowedType.CAR);
         }
-        public override bool findOccupation<U>(List<U> buildings) {
-            var map = new Dictionary<U, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
-            foreach (var building in buildings.Where(x => x.HasOpenOccupations)) {
+        public override bool findOccupation(List<OccupationalBuilding> buildings) {
+            var map = new Dictionary<OccupationalBuilding, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
+            foreach (var building in buildings.Where(x => x.HasOpenOccupations(Type.WORKER))) {
                 var idx = Traveller.Keys.Count;
                 Traveller.Keys.AddRange(building.Nodes);
                 var pathTo = Pathfinding.Pathfinder.findQuickestPath(Home, building, Traveller);
@@ -65,7 +78,7 @@ namespace GridCity.People {
                 if (i == orderedMap.Count() - 1 || Utility.RandomGenerator.get() < 0.5) {
                     var mapEntry = orderedMap.ElementAt(i);
                     var building = mapEntry.Key;
-                    Occupation occupation = building.FirstOpenOccupation;
+                    Occupation occupation = building.FirstOpenOccupation(Type.WORKER);
                     occupation.occupy(this);
                     setOccupation(occupation);
                     PathToOccupation = mapEntry.Value.Item1.Item1;
@@ -111,9 +124,9 @@ namespace GridCity.People {
     class Teen : Occupant {
         public Teen(ResidentialBuilding home) : base(home) {
         }
-        public override bool findOccupation<U>(List<U> buildings) {
-            var map = new Dictionary<U, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
-            foreach (var building in buildings.Where(x => x.HasOpenOccupations)) {
+        public override bool findOccupation(List<OccupationalBuilding> buildings) {
+            var map = new Dictionary<OccupationalBuilding, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
+            foreach (var building in buildings.Where(x => x.HasOpenOccupations(Type.TEEN))) {
                 var idx = Traveller.Keys.Count;
                 Traveller.Keys.AddRange(building.Nodes);
                 var pathTo = Pathfinding.Pathfinder.findQuickestPath(Home, building, Traveller);
@@ -128,7 +141,7 @@ namespace GridCity.People {
                 if (i == orderedMap.Count() - 1 || Utility.RandomGenerator.get() < 0.5) {
                     var mapEntry = orderedMap.ElementAt(i);
                     var building = mapEntry.Key;
-                    Occupation occupation = building.FirstOpenOccupation;
+                    Occupation occupation = building.FirstOpenOccupation(Type.TEEN);
                     occupation.occupy(this);
                     setOccupation(occupation);
                     PathToOccupation = mapEntry.Value.Item1.Item1;
@@ -160,9 +173,9 @@ namespace GridCity.People {
         public Student(ResidentialBuilding home) : base(home) {
         }
 
-        public override bool findOccupation<U>(List<U> buildings) {
-            var map = new Dictionary<U, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
-            foreach (var building in buildings.Where(x => x.HasOpenOccupations)) {
+        public override bool findOccupation(List<OccupationalBuilding> buildings) {
+            var map = new Dictionary<OccupationalBuilding, Tuple<Tuple<Pathfinding.Path, Time>, Tuple<Pathfinding.Path, Time>>>();
+            foreach (var building in buildings.Where(x => x.HasOpenOccupations(Type.STUDENT))) {
                 var idx = Traveller.Keys.Count;
                 Traveller.Keys.AddRange(building.Nodes);
                 var pathTo = Pathfinding.Pathfinder.findQuickestPath(Home, building, Traveller);
@@ -177,7 +190,7 @@ namespace GridCity.People {
                 if (i == orderedMap.Count() - 1 || Utility.RandomGenerator.get() < 0.5) {
                     var mapEntry = orderedMap.ElementAt(i);
                     var building = mapEntry.Key;
-                    Occupation occupation = building.FirstOpenOccupation;
+                    Occupation occupation = building.FirstOpenOccupation(Type.STUDENT);
                     occupation.occupy(this);
                     setOccupation(occupation);
                     PathToOccupation = mapEntry.Value.Item1.Item1;

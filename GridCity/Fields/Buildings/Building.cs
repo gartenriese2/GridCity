@@ -5,7 +5,6 @@ namespace GridCity.Fields.Buildings {
     abstract class Building : ConnectableField {
         public enum Type { RESIDENTIAL, WORK, SCHOOL }
         private string Name { get; set; }
-        public Building() : base() { }
         public Building(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, string name) : base(pos, layout, orientation) {
             Name = name;
             var tex = (Bitmap)Properties.Resources.ResourceManager.GetObject(Name);

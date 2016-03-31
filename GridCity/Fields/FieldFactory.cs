@@ -1,40 +1,11 @@
-﻿using System;
+﻿using GridCity.People;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace GridCity.Fields {
-    enum BorderType { NONE, ROAD, BUILDING }
-    struct BorderConfig {
-        public BorderType Left { get; private set; }
-        public BorderType Right { get; private set; }
-        public BorderType Top { get; private set; }
-        public BorderType Bottom { get; private set; }
-        public BorderConfig(BorderType left, BorderType top, BorderType right, BorderType bottom) {
-            Left = left;
-            Right = right;
-            Top = top;
-            Bottom = bottom;
-        }
-        private string TypeToString(BorderType type) {
-            switch (type) {
-                case BorderType.NONE:
-                    return "None";
-                case BorderType.ROAD:
-                    return "Road";
-                case BorderType.BUILDING:
-                    return "Building";
-                default:
-                    throw new NotImplementedException("The case is not implemented!");
-            }
-        }
-        public override string ToString() {
-            return TypeToString(Left) + TypeToString(Top) + TypeToString(Right) + TypeToString(Bottom);
-        }
-    }
     class FieldFactory {
         private XDocument FieldsDoc { get; }
         private XDocument NodesDoc { get; }
@@ -153,7 +124,7 @@ namespace GridCity.Fields {
             }
             return new Roads.Road(pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject(name), name);
         }
-        public T get<T>(string name, ConnectableField.Orientation_CW orientation, Utility.GlobalCoordinate pos) where T : Buildings.Building {
+        public T getOccupationalBuilding<T>(string name, ConnectableField.Orientation_CW orientation, Utility.GlobalCoordinate pos) where T : Buildings.OccupationalBuilding {
             var types = from el in FieldsDoc.Root.Elements("type") where (string)el.Attribute("name") == name select el;
             if (types.Count() == 0) {
                 throw new NotImplementedException("This type of config is not implemented in the xml file");
@@ -163,13 +134,38 @@ namespace GridCity.Fields {
             var nodeInfos = getNodeInfosFromElement(type);
             var connections = getConnectionsFromElement(type);
             var pathInfos = getPathInfosFromElement(type);
-            uint occupations = getOccupationsFromElement(type);
+            var occupations = getOccupationsFromElement(type);
 
             return (T)Activator.CreateInstance(typeof(T), name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, occupations);
         }
+        public Buildings.ResidentialBuilding getResidentialBuilding(string name, ConnectableField.Orientation_CW orientation, Utility.GlobalCoordinate pos) {
+            var types = from el in FieldsDoc.Root.Elements("type") where (string)el.Attribute("name") == name select el;
+            if (types.Count() == 0) {
+                throw new NotImplementedException("This type of config is not implemented in the xml file");
+            }
+            var type = types.First();
+            var coords = getCoordsFromElement(type);
+            var nodeInfos = getNodeInfosFromElement(type);
+            var connections = getConnectionsFromElement(type);
+            var pathInfos = getPathInfosFromElement(type);
+            var numHouseholds = getHouseholdsFromElement(type);
 
-        private uint getOccupationsFromElement(XElement type) {
-            var el = type.Element("occupations");
+            return new Buildings.ResidentialBuilding(name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, numHouseholds);
+        }
+
+        private Dictionary<People.Resident.Type, uint> getOccupationsFromElement(XElement type) {
+            var list = type.Elements("occupations");
+            Dictionary<People.Resident.Type, uint> dic = new Dictionary<People.Resident.Type, uint>();
+            foreach (var el in list) {
+                var t = el.Attribute("type").Value;
+                var min = uint.Parse(el.Attribute("min").Value);
+                var max = uint.Parse(el.Attribute("max").Value);
+                dic.Add(Resident.stringToType(t), Utility.RandomGenerator.get(min, max));
+            }
+            return dic;
+        }
+        private uint getHouseholdsFromElement(XElement type) {
+            var el = type.Element("households");
             var min = uint.Parse(el.Attribute("min").Value);
             var max = uint.Parse(el.Attribute("max").Value);
             return Utility.RandomGenerator.get(min, max);
