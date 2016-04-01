@@ -146,13 +146,13 @@ namespace GridCity.Properties {
         ///    &lt;allowed&gt;CAR&lt;/allowed&gt;
         ///    &lt;public&gt;YES&lt;/public&gt;
         ///  &lt;/type&gt;
+        ///  &lt;type name=&quot;CarPrivate&quot;&gt;
+        ///    &lt;allowed&gt;CAR&lt;/allowed&gt;
+        ///    &lt;public&gt;NO&lt;/public&gt;
+        ///  &lt;/type&gt;
         ///  &lt;type name=&quot;CarParking&quot;&gt;
         ///    &lt;allowed&gt;CAR&lt;/allowed&gt;
-        ///    &lt;allowed&gt;PEDESTRIAN&lt;/allowed&gt;
-        ///    &lt;public&gt;YES&lt;/public&gt;
-        ///  &lt;/type&gt;
-        ///  &lt;type name=&quot;CarParkingPrivate&quot;&gt;
-        ///    &lt;all [rest of string was truncated]&quot;;.
+        ///    &lt;allowed&gt;PEDESTRIAN [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Nodes {
             get {
@@ -278,6 +278,16 @@ namespace GridCity.Properties {
         internal static string test_vert {
             get {
                 return ResourceManager.GetString("test_vert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UniversityBuilding {
+            get {
+                object obj = ResourceManager.GetObject("UniversityBuilding", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

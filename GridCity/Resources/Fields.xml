@@ -374,6 +374,7 @@
   <type name="SchoolBuilding">
     <occupations type="TEEN" min="100" max="200"></occupations>
     <occupations type="WORKER" min="8" max="16"></occupations>
+    <size x="2" y="2"></size>
     <nodes>
       <node x="0.5" y="0.5" type="PedestrianPrivate"></node>
       <node x="0.375" y="0.5" type="Garage"></node>

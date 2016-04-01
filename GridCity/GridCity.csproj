@@ -119,6 +119,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
@@ -193,6 +194,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Paths.xml" />
+    <None Include="Resources\Textures\UniversityBuilding.bmp" />
     <None Include="Resources\Textures\SchoolBuilding.bmp" />
     <None Include="Resources\Textures\SmallResidentialBuilding.bmp" />
     <None Include="Resources\Textures\MediumResidentialBuilding.bmp" />

@@ -5,8 +5,10 @@ namespace GridCity.Fields.Buildings {
     abstract class Building : ConnectableField {
         public enum Type { RESIDENTIAL, WORK, SCHOOL }
         private string Name { get; set; }
-        public Building(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, string name) : base(pos, layout, orientation) {
+        private Tuple<uint, uint> Size { get; }
+        public Building(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, string name, Tuple<uint, uint> size) : base(pos, layout, orientation) {
             Name = name;
+            Size = size;
             var tex = (Bitmap)Properties.Resources.ResourceManager.GetObject(Name);
             switch (orientation) {
                 case Orientation_CW.NINETY:

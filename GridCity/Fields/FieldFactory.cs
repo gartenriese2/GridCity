@@ -135,8 +135,9 @@ namespace GridCity.Fields {
             var connections = getConnectionsFromElement(type);
             var pathInfos = getPathInfosFromElement(type);
             var occupations = getOccupationsFromElement(type);
+            var size = getSizeFromElement(type);
 
-            return (T)Activator.CreateInstance(typeof(T), name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, occupations);
+            return (T)Activator.CreateInstance(typeof(T), name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, occupations, size);
         }
         public Buildings.ResidentialBuilding getResidentialBuilding(string name, ConnectableField.Orientation_CW orientation, Utility.GlobalCoordinate pos) {
             var types = from el in FieldsDoc.Root.Elements("type") where (string)el.Attribute("name") == name select el;
@@ -149,13 +150,14 @@ namespace GridCity.Fields {
             var connections = getConnectionsFromElement(type);
             var pathInfos = getPathInfosFromElement(type);
             var numHouseholds = getHouseholdsFromElement(type);
+            var size = getSizeFromElement(type);
 
-            return new Buildings.ResidentialBuilding(name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, numHouseholds);
+            return new Buildings.ResidentialBuilding(name, pos, new Pathfinding.BaseNodeLayout(coords, nodeInfos, connections, pathInfos), orientation, numHouseholds, size);
         }
 
-        private Dictionary<People.Resident.Type, uint> getOccupationsFromElement(XElement type) {
+        private Dictionary<Resident.Type, uint> getOccupationsFromElement(XElement type) {
             var list = type.Elements("occupations");
-            Dictionary<People.Resident.Type, uint> dic = new Dictionary<People.Resident.Type, uint>();
+            Dictionary<Resident.Type, uint> dic = new Dictionary<Resident.Type, uint>();
             foreach (var el in list) {
                 var t = el.Attribute("type").Value;
                 var min = uint.Parse(el.Attribute("min").Value);
@@ -169,6 +171,17 @@ namespace GridCity.Fields {
             var min = uint.Parse(el.Attribute("min").Value);
             var max = uint.Parse(el.Attribute("max").Value);
             return Utility.RandomGenerator.get(min, max);
+        }
+
+        private Tuple<uint, uint> getSizeFromElement(XElement type) {
+            var els = type.Elements("size");
+            if (!els.Any()) {
+                return Tuple.Create(1u, 1u);
+            }
+            var el = els.First();
+            uint x = uint.Parse(el.Attribute("x").Value);
+            uint y = uint.Parse(el.Attribute("y").Value);
+            return Tuple.Create(x, y);
         }
     }
 }

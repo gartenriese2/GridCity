@@ -26,7 +26,7 @@ namespace GridCity {
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 14u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 13u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 12u))));
-            street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 11u))));
+            street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 11u))));
             street0.Add(Grid.setField(Factory.getRoad("TCrossingWithCrosswalks", ConnectableField.Orientation_CW.TWOSEVENTY, new GlobalCoordinate(2u, 10u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 9u))));
             street0.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.ZERO, new GlobalCoordinate(2u, 8u))));
@@ -70,7 +70,7 @@ namespace GridCity {
 
             List<ConnectableField> street3 = new List<ConnectableField>();
             street3.Add(street0[8]);
-            street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(3u, 10u))));
+            street3.Add(Grid.setField(Factory.getRoad("StraightRoad", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(3u, 10u))));
             street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(4u, 10u))));
             street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(5u, 10u))));
             street3.Add(Grid.setField(Factory.getRoad("StraightRoadWithBuildingAccess", ConnectableField.Orientation_CW.NINETY, new GlobalCoordinate(6u, 10u))));
@@ -106,11 +106,13 @@ namespace GridCity {
         }
         private void addResidentialBuilding(string name, ConnectableField.Orientation_CW orientation, uint x, uint y) {
             var bld = (ConnectableField)Grid.setField(Factory.getResidentialBuilding(name, orientation, new GlobalCoordinate(x, y)));
-            Debug.Assert(connectBuilding(bld, orientation, x, y), "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
+            bool success = connectBuilding(bld, orientation, x, y);
+            Debug.Assert(success, "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
         }
         private void addOccupationalBuilding<T>(string name, ConnectableField.Orientation_CW orientation, uint x, uint y) where T : OccupationalBuilding {
             var bld = (ConnectableField)Grid.setField(Factory.getOccupationalBuilding<T>(name, orientation, new GlobalCoordinate(x, y)));
-            Debug.Assert(connectBuilding(bld, orientation, x, y), "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
+            bool success = connectBuilding(bld, orientation, x, y);
+            Debug.Assert(success, "Building at (" + x + "|" + y + ") could not connect with the following orientation: " + orientation.ToString());
         }
         private void initBuildings() {
             addResidentialBuilding("SmallResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 17);
@@ -153,7 +155,8 @@ namespace GridCity {
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 8, 10);
 
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.NINETY, 11, 5);
-            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 3, 11);
+            addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.NINETY, 3, 11);
+            addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 11);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 4, 11);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 5, 11);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.ZERO, 6, 11);
@@ -163,29 +166,29 @@ namespace GridCity {
             addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.ONEEIGHTY, 6, 9);
             addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 1, 9);
             addOccupationalBuilding<School>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 7);
-            addOccupationalBuilding<University>("SchoolBuilding", ConnectableField.Orientation_CW.NINETY, 11, 8);
+            addOccupationalBuilding<University>("UniversityBuilding", ConnectableField.Orientation_CW.NINETY, 11, 8);
             addOccupationalBuilding<WorkBuilding>("WorkBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 7);
             addResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 8);
         }
         private void initOccupations() {
             var rbs = Grid.getFields<ResidentialBuilding>();
             var wbs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.WORKER)).ToList();
-            var sbs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList(); ;
+            var sbs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList();
             var ubs = Grid.getFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.STUDENT)).ToList();
             foreach (var rb in rbs) {
                 foreach (var household in rb.Households) {
                     foreach (var resident in household.Residents) {
                         if (resident is Worker) {
                             if (!((Worker)resident).findOccupation(wbs)) {
-                                Console.WriteLine("Worker did not find a job!");
+                                throw new NotSupportedException("All workers need to find jobs!");
                             }
                         } else if (resident is Teen) {
                             if (!((Teen)resident).findOccupation(sbs)) {
-                                Console.WriteLine("Teen did not find a school!");
+                                throw new NotSupportedException("All teens need to find a school!");
                             }
                         } else if (resident is Student) {
                             if (!((Student)resident).findOccupation(ubs)) {
-                                Console.WriteLine("Student did not find a university!");
+                                throw new NotSupportedException("All students need to find a university!");
                             }
                         }
                     }

@@ -10,12 +10,6 @@ namespace GridCity.Pathfinding {
         public static Tuple<Path, Time> findQuickestPath(Building from, Building to, Traveller traveller) {
             return findQuickestPath(from.Nodes[0], to.Nodes[0], traveller);
         }
-        //public static Path findShortestPath(Building from, Building to, List<NodeInfo.AllowedType> allowedNodes) {
-        //    return findShortestPath(from.Nodes[0], to.Nodes[0], allowedNodes);
-        //}
-        //public static Path findShortestPath(Building from, Building to) {
-        //    return findShortestPath(from.Nodes[0], to.Nodes[0]);
-        //}
         private static Tuple<Path, Time> findQuickestPath(Node from, Node to, Traveller traveller) {
             if (!traveller.GetType().IsValueType) {
                 throw new ArgumentException("traveller needs to be a copyable struct");

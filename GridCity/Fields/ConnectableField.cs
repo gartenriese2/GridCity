@@ -1,7 +1,6 @@
 ﻿using GridCity.Pathfinding;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GridCity.Fields {
     abstract class ConnectableField : Field {
