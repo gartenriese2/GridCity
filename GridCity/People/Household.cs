@@ -1,31 +1,41 @@
-﻿using System;
-using GridCity.Fields.Buildings;
-using System.Collections.Generic;
+﻿namespace GridCity.People {
 
-namespace GridCity.People {
-    class Household {
-        static private Random rnd = new Random();
-        public List<Resident> Residents { get; private set; }
-        private ResidentialBuilding Building { get; }
+    using System;
+    using System.Collections.Generic;
+    using Fields.Buildings;
+
+    internal class Household {
+
         public Household(ResidentialBuilding rb, List<Resident> residents) {
             Building = rb;
             Residents = residents;
         }
-        public static Household getRandomHousehold(ResidentialBuilding rb) {
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        public List<Resident> Residents { get; }
+
+        private ResidentialBuilding Building { get; }
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
+        public static Household GetRandomHousehold(ResidentialBuilding rb) {
             List<Resident> residents = new List<Resident>();
-            var root = rnd.NextDouble();
+            var root = Utility.RandomGenerator.Get();
             if (root < 0.257) {
                 // Pensioners
                 residents.Add(new Pensioner(rb));
-                if (rnd.NextDouble() < 0.594) {
+                if (Utility.RandomGenerator.Get() < 0.594) {
                     residents.Add(new Pensioner(rb));
                 }
             } else if (root < 0.734) {
                 // Families
-                root = rnd.NextDouble();
+                root = Utility.RandomGenerator.Get();
                 if (root < 0.139) {
                     // Single Parent
-                    if (rnd.NextDouble() < 0.575) {
+                    if (Utility.RandomGenerator.Get() < 0.575) {
                         // Single Parent Working
                         residents.Add(new Worker(rb));
                     } else {
@@ -33,21 +43,23 @@ namespace GridCity.People {
                         residents.Add(new Unemployed(rb));
                     }
 
-                    var percentages = new List<float>{ 0.172f, 0.472f, 0.591f, 0.771f };
-                    root = rnd.NextDouble();
+                    var percentages = new List<float> {
+                        0.172f, 0.472f, 0.591f, 0.771f
+                    };
+                    root = Utility.RandomGenerator.Get();
                     if (root < 0.691) {
-                        addChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
                     } else if (root < 0.934) {
-                        addChild(residents, percentages, rb);
-                        addChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
                     } else {
-                        addChild(residents, percentages, rb);
-                        addChild(residents, percentages, rb);
-                        addChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
+                        AddChild(residents, percentages, rb);
                     }
                 } else {
                     // Couple Parents
-                    root = rnd.NextDouble();
+                    root = Utility.RandomGenerator.Get();
                     if (root < 0.56) {
                         residents.Add(new Worker(rb));
                         residents.Add(new Worker(rb));
@@ -59,24 +71,24 @@ namespace GridCity.People {
                         residents.Add(new Unemployed(rb));
                     }
 
-                    root = rnd.NextDouble();
+                    root = Utility.RandomGenerator.Get();
                     if (root >= 0.456) {
                         var percentages = new List<float> { 0.301f, 0.617f, 0.72f, 0.84f };
                         if (root < 0.715) {
-                            addChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
                         } else if (root < 0.929) {
-                            addChild(residents, percentages, rb);
-                            addChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
                         } else {
-                            addChild(residents, percentages, rb);
-                            addChild(residents, percentages, rb);
-                            addChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
+                            AddChild(residents, percentages, rb);
                         }
                     } 
                 }
             } else if (root < 0.985) {
                 // Singles
-                root = rnd.NextDouble();
+                root = Utility.RandomGenerator.Get();
                 if (root < 0.738) {
                     residents.Add(new Worker(rb));
                 } else if (root < 0.98) {
@@ -88,7 +100,7 @@ namespace GridCity.People {
                 // Shared Flat
                 residents.Add(new Student(rb));
                 residents.Add(new Student(rb));
-                root = rnd.NextDouble();
+                root = Utility.RandomGenerator.Get();
                 if (root > 0.5) {
                     residents.Add(new Student(rb));
                 } else if (root > 0.85) {
@@ -97,13 +109,21 @@ namespace GridCity.People {
                     residents.Add(new Student(rb));
                 }
             }
+
             return new Household(rb, residents);
         }
-        private static void addChild(List<Resident> residents, List<float> percentages, ResidentialBuilding rb) {
+
+        public override string ToString() {
+            // TODO
+            return "todo!";
+        }
+
+        private static void AddChild(List<Resident> residents, List<float> percentages, ResidentialBuilding rb) {
             if (percentages.Count != 4) {
                 throw new ArgumentException("There need to be 4 percentages");
             }
-            var percentage = rnd.NextDouble();
+
+            var percentage = Utility.RandomGenerator.Get();
             if (percentage < percentages[0]) {
                 residents.Add(new Infant(rb));
             } else if (percentage < percentages[1]) {
@@ -115,9 +135,6 @@ namespace GridCity.People {
             } else {
                 residents.Add(new Worker(rb));
             }
-        }
-        public override string ToString() {
-            return "todo!";
         }
     }
 }

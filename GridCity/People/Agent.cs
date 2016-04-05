@@ -1,45 +1,68 @@
-﻿using GridCity.Graphics;
-using GridCity.Utility;
-using GridCity.Utility.Units;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
+﻿namespace GridCity.People {
 
-namespace GridCity.People {
-    class Agent : ITickable, IDrawable {
-        public static List<Agent> Agents { get; } = new List<Agent>();
-        public static Agent create() {
-            Agents.Add(new Agent());
-            return Agents.Last();
-        }
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using Graphics;
+    using Utility;
+    using Utility.Units;
+    
+    internal class Agent : ITickable, IDrawable {
+
         private Agent() {
             Texture = new Texture("Agent");
         }
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        public static List<Agent> Agents { get; } = new List<Agent>();
+
         public bool IsMoving { get; private set; } = false;
+
         public bool IsVisible { get; private set; } = false;
-        private Pathfinding.Path Path { get; set; }
-        private int Idx { get; set; }
-        private Pathfinding.Node PreviousNode { get; set; }
-        private Pathfinding.Node NextNode { get; set; }
-        private Pathfinding.PathInfo Info { get; set; }
-        private Time CurrentWait { get; set; } = new Time(0);
-        private Coordinate Position { get; set; }
+
         public List<Coordinate> Trace { get; private set; } = new List<Coordinate>();
 
-        public Texture Texture {
-            get;
+        public Texture Texture { get; }
+
+        private Pathfinding.Path Path { get; set; }
+
+        private int Idx { get; set; }
+
+        private Pathfinding.Node PreviousNode { get; set; }
+
+        private Pathfinding.Node NextNode { get; set; }
+
+        private Pathfinding.PathInfo Info { get; set; }
+
+        private Time CurrentWait { get; set; } = new Time(0);
+
+        private Coordinate Position { get; set; }
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
+        public static Agent Create() {
+            Agents.Add(new Agent());
+            return Agents.Last();
         }
 
-        public bool tick(Time elapsedSeconds) {
-            if (!IsMoving)
-                return false;
+        public override string ToString() {
+            return "Agent at " + Position;
+        }
 
-            //if ((float)elapsedSeconds > 0.5) {
-            //    Console.WriteLine("Warning: elapsedSeconds is pretty big: " + elapsedSeconds);
-            //}
+        public bool Tick(Time elapsedSeconds) {
+            if (!IsMoving) {
+                return false;
+            }
+
+            ////if ((float)elapsedSeconds > 0.5) {
+            ////    Console.WriteLine("Warning: elapsedSeconds is pretty big: " + elapsedSeconds);
+            ////}
 
             if (CurrentWait < elapsedSeconds) {
-                checkOtherAgents();
+                CheckOtherAgents();
             }
 
             if (CurrentWait >= elapsedSeconds) {
@@ -81,28 +104,32 @@ namespace GridCity.People {
                             CurrentWait.Seconds = 0;
                         }
                     }
+
                     distToNextNode = (new Vec2D(NextNode.WorldPosition) - new Vec2D(Position)).Length;
                     remainingDist = Info.Speed * secondsLeft;
                 }
             }
+
             Vec2D dir = new Vec2D(NextNode.WorldPosition) - new Vec2D(PreviousNode.WorldPosition);
             Vec2D dirCompare = new Vec2D(NextNode.WorldPosition) - new Vec2D(Position);
-            dir.normalize();
-            dirCompare.normalize();
-            Contract.Assert(dir.X == dirCompare.X && dir.Y == dirCompare.Y);
+            dir.Normalize();
+            dirCompare.Normalize();
+            Debug.Assert(dir.X == dirCompare.X && dir.Y == dirCompare.Y, "Position is not on the vector from PreviousNode to NextNode");
             dir *= (float)remainingDist;
-            Position = (new Vec2D(Position) + dir).toCoordinate();
+            Position = (new Vec2D(Position) + dir).ToCoordinate();
             Trace.Add(new Coordinate(Position.X, Position.Y));
             return true;
         }
-        public void dispatch(Pathfinding.Path path, Time alreadyElapsedTime) {
-            dispatch(path);
+
+        public void Dispatch(Pathfinding.Path path, Time alreadyElapsedTime) {
+            Dispatch(path);
             if ((float)alreadyElapsedTime > 0) {
-                tick(alreadyElapsedTime);
+                Tick(alreadyElapsedTime);
             }
         }
-        public void dispatch(Pathfinding.Path path) {
-            Contract.Requires(path != null && path.Nodes.Count > 1);
+
+        public void Dispatch(Pathfinding.Path path) {
+            Debug.Assert(path.Nodes.Count > 1, "path must have at least 2 Nodes");
             Path = path;
             Idx = 0;
             PreviousNode = path.Nodes[Idx];
@@ -114,15 +141,17 @@ namespace GridCity.People {
             IsMoving = true;
             IsVisible = !Info.Hidden;
         }
-        private bool checkOtherAgents() {
+
+        private bool CheckOtherAgents() {
             foreach (var agent in Agents) {
                 if (this == agent || !agent.IsMoving) {
                     continue;
                 }
+
                 if (agent.PreviousNode == PreviousNode && agent.NextNode == NextNode) {
                     // on same path
-                    Distance dist = (Position.toVec() - PreviousNode.WorldPosition.toVec()).Length;
-                    Distance otherDist = (agent.Position.toVec() - PreviousNode.WorldPosition.toVec()).Length;
+                    Distance dist = (Position.ToVec() - PreviousNode.WorldPosition.ToVec()).Length;
+                    Distance otherDist = (agent.Position.ToVec() - PreviousNode.WorldPosition.ToVec()).Length;
                     if (otherDist > dist) {
                         // other agent in front of this agent
                         // we don't check for equality, because then one agent will advance while the others checked after that will have to wait
@@ -140,9 +169,9 @@ namespace GridCity.People {
                     }
                 } else if (agent.NextNode == NextNode) {
                     // going to same node
-                    Distance distToNode = (NextNode.WorldPosition.toVec() - Position.toVec()).Length;
+                    Distance distToNode = (NextNode.WorldPosition.ToVec() - Position.ToVec()).Length;
                     if ((float)distToNode < 1f) {
-                        Distance otherDistToNode = (NextNode.WorldPosition.toVec() - agent.Position.toVec()).Length;
+                        Distance otherDistToNode = (NextNode.WorldPosition.ToVec() - agent.Position.ToVec()).Length;
                         if (distToNode > otherDistToNode) {
                             // yield
                             Time yieldTime = otherDistToNode / agent.Info.Speed;
@@ -154,7 +183,7 @@ namespace GridCity.People {
                     }
                 } else if (Path.Nodes.Count > Idx + 2 && agent.PreviousNode == NextNode && agent.NextNode == Path.Nodes[Idx + 2]) {
                     // other agent is in front of path after next node
-                    Distance distBetweenAgents = (agent.Position.toVec() - agent.PreviousNode.WorldPosition.toVec()).Length + (NextNode.WorldPosition.toVec() - Position.toVec()).Length;
+                    Distance distBetweenAgents = (agent.Position.ToVec() - agent.PreviousNode.WorldPosition.ToVec()).Length + (NextNode.WorldPosition.ToVec() - Position.ToVec()).Length;
                     Distance minDistBetweenAgents = Pathfinding.NodeInfo.MinDist(Info.Type);
                     if (distBetweenAgents < minDistBetweenAgents) {
                         Distance wait = minDistBetweenAgents - distBetweenAgents;
@@ -166,9 +195,9 @@ namespace GridCity.People {
                     }
                 } else if (Path.Nodes.Count > Idx + 3 && agent.PreviousNode == Path.Nodes[Idx + 2] && agent.NextNode == Path.Nodes[Idx + 3]) {
                     // other agent is in front of path after two next nodes
-                    Distance distBetweenAgents = (agent.Position.toVec() - agent.PreviousNode.WorldPosition.toVec()).Length
-                                                + (NextNode.WorldPosition.toVec() - Position.toVec()).Length
-                                                + (agent.PreviousNode.WorldPosition.toVec() - NextNode.WorldPosition.toVec()).Length;
+                    Distance distBetweenAgents = (agent.Position.ToVec() - agent.PreviousNode.WorldPosition.ToVec()).Length
+                                                + (NextNode.WorldPosition.ToVec() - Position.ToVec()).Length
+                                                + (agent.PreviousNode.WorldPosition.ToVec() - NextNode.WorldPosition.ToVec()).Length;
                     Distance minDistBetweenAgents = Pathfinding.NodeInfo.MinDist(Info.Type);
                     if (distBetweenAgents < minDistBetweenAgents) {
                         Distance wait = minDistBetweenAgents - distBetweenAgents;
@@ -180,10 +209,8 @@ namespace GridCity.People {
                     }
                 }
             }
+
             return false;
-        }
-        public override string ToString() {
-            return "Agent at " + Position;
         }
     }
 }

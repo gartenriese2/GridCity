@@ -2,11 +2,11 @@
 
     using System;
 
-    internal class Coordinate {
+    internal class LocalCoordinate {
 
-        public Coordinate(float x, float y) {
-            if (x < 0f || y < 0f) {
-                throw new ArgumentOutOfRangeException("Coordinates cannot be negative");
+        public LocalCoordinate(float x, float y) {
+            if (x < 0f || y < 0f || x > 1f || y > 1f) {
+                throw new ArgumentOutOfRangeException("LocalCoordinates must be in [0;1]");
             }
 
             X = x;
@@ -23,12 +23,8 @@
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
-        public override string ToString() {
-            return "(" + X + "|" + Y + ")";
-        }
-
-        public Vec2D ToVec() {
-            return new Vec2D(this);
+        public Coordinate ToWorldCoordinate(GlobalCoordinate globalOffset, float scale) {
+            return new Coordinate((globalOffset.X + X) * scale, (globalOffset.Y + Y) * scale);
         }
     }
 }

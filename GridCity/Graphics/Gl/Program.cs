@@ -1,23 +1,95 @@
-﻿using Pencil.Gaming.Graphics;
-using System;
-using System.Collections.Generic;
+﻿namespace GridCity.Graphics.Gl {
 
-namespace GridCity.Graphics.Gl {
-    class Program {
-        public uint Handle { get; set; }
-        private Dictionary<string, int> Uniforms { get; set; } = new Dictionary<string, int>();
+    using System;
+    using System.Collections.Generic;
+    using Pencil.Gaming.Graphics;
+
+    internal class Program {
+
         public Program() {
             Handle = GL.CreateProgram();
             if (Handle == 0) {
                 Console.WriteLine("Error creating program");
             }
         }
-        public void attachShaders(params Shader[] shaders) {
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        public uint Handle { get; set; }
+
+        private Dictionary<string, int> Uniforms { get; set; } = new Dictionary<string, int>();
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
+        public void AttachShaders(params Shader[] shaders) {
             foreach (var shader in shaders) {
                 GL.AttachShader(Handle, shader.Handle);
             }
         }
-        public bool link() {
+
+        public void Use() {
+            int[] linkStatus = new int[1];
+            GL.GetProgram(Handle, ProgramParameter.LinkStatus, linkStatus);
+            if (linkStatus[0] == 0) {
+                Link();
+            }
+
+            GL.UseProgram(Handle);
+        }
+
+        public bool SetUniform1<T>(string name, T value) {
+            if (!Uniforms.ContainsKey(name)) {
+                return false;
+            }
+
+            int loc = Uniforms[name];
+            GL.Uniform1(loc, (dynamic)value);
+            return true;
+        }
+
+        public bool SetUniform2<T>(string name, T value) {
+            if (!Uniforms.ContainsKey(name)) {
+                return false;
+            }
+
+            int loc = Uniforms[name];
+            GL.Uniform2(loc, (dynamic)value);
+            return true;
+        }
+
+        public bool SetUniform3<T>(string name, T value) {
+            if (!Uniforms.ContainsKey(name)) {
+                return false;
+            }
+
+            int loc = Uniforms[name];
+            GL.Uniform3(loc, (dynamic)value);
+            return true;
+        }
+
+        public bool SetUniform4<T>(string name, T value) {
+            if (!Uniforms.ContainsKey(name)) {
+                return false;
+            }
+
+            int loc = Uniforms[name];
+            GL.Uniform4(loc, (dynamic)value);
+            return true;
+        }
+
+        public bool SetUniform(string name, Pencil.Gaming.MathUtils.Matrix mat) {
+            if (!Uniforms.ContainsKey(name)) {
+                return false;
+            }
+
+            int loc = Uniforms[name];
+            GL.UniformMatrix4(loc, false, ref mat);
+            return true;
+        }
+
+        private bool Link() {
             GL.LinkProgram(Handle);
             int[] success = new int[1];
             GL.GetProgram(Handle, ProgramParameter.LinkStatus, success);
@@ -26,6 +98,7 @@ namespace GridCity.Graphics.Gl {
                 Console.WriteLine("Program linking failed with the following error:\n" + log);
                 return false;
             }
+
             Uniforms.Clear();
             int[] numUniforms = new int[1];
             GL.GetProgram(Handle, ProgramParameter.ActiveUniforms, numUniforms);
@@ -36,54 +109,7 @@ namespace GridCity.Graphics.Gl {
                 int loc = GL.GetUniformLocation(Handle, name);
                 Uniforms.Add(name, loc);
             }
-            return true;
-        }
-        public void use() {
-            int[] linkStatus = new int[1];
-            GL.GetProgram(Handle, ProgramParameter.LinkStatus, linkStatus);
-            if (linkStatus[0] == 0) {
-                link();
-            }
-            GL.UseProgram(Handle);
-        }
-        public bool setUniform1<T>(string name, T value) {
-            if (!Uniforms.ContainsKey(name)) {
-                return false;
-            }
-            int loc = Uniforms[name];
-            GL.Uniform1(loc, (dynamic)value);
-            return true;
-        }
-        public bool setUniform2<T>(string name, T value) {
-            if (!Uniforms.ContainsKey(name)) {
-                return false;
-            }
-            int loc = Uniforms[name];
-            GL.Uniform2(loc, (dynamic)value);
-            return true;
-        }
-        public bool setUniform3<T>(string name, T value) {
-            if (!Uniforms.ContainsKey(name)) {
-                return false;
-            }
-            int loc = Uniforms[name];
-            GL.Uniform3(loc, (dynamic)value);
-            return true;
-        }
-        public bool setUniform4<T>(string name, T value) {
-            if (!Uniforms.ContainsKey(name)) {
-                return false;
-            }
-            int loc = Uniforms[name];
-            GL.Uniform4(loc, (dynamic)value);
-            return true;
-        }
-        public bool setUniform(string name, Pencil.Gaming.MathUtils.Matrix mat) {
-            if (!Uniforms.ContainsKey(name)) {
-                return false;
-            }
-            int loc = Uniforms[name];
-            GL.UniformMatrix4(loc, false, ref mat);
+
             return true;
         }
     }

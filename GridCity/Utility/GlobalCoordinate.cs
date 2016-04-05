@@ -1,14 +1,8 @@
 ﻿namespace GridCity.Utility {
 
-    using System;
+    internal class GlobalCoordinate {
 
-    internal class Coordinate {
-
-        public Coordinate(float x, float y) {
-            if (x < 0f || y < 0f) {
-                throw new ArgumentOutOfRangeException("Coordinates cannot be negative");
-            }
-
+        public GlobalCoordinate(uint x, uint y) {
             X = x;
             Y = y;
         }
@@ -16,19 +10,15 @@
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        public float X { get; private set; }
+        public uint X { get; private set; }
 
-        public float Y { get; private set; }
+        public uint Y { get; private set; }
 
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
         public override string ToString() {
             return "(" + X + "|" + Y + ")";
-        }
-
-        public Vec2D ToVec() {
-            return new Vec2D(this);
         }
     }
 }

@@ -1,5 +1,10 @@
 ﻿namespace GridCity.Graphics {
-    interface IDrawable {
+
+    internal interface IDrawable {
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
         Texture Texture { get; }
     }
 }

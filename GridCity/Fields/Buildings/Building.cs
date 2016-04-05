@@ -1,11 +1,10 @@
-﻿using System;
-using System.Drawing;
+﻿namespace GridCity.Fields.Buildings {
 
-namespace GridCity.Fields.Buildings {
-    abstract class Building : ConnectableField {
-        public enum Type { RESIDENTIAL, WORK, SCHOOL }
-        private string Name { get; set; }
-        private Tuple<uint, uint> Size { get; }
+    using System;
+    using System.Drawing;
+
+    internal abstract class Building : ConnectableField {
+
         public Building(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, string name, Tuple<uint, uint> size) : base(pos, layout, orientation) {
             Name = name;
             Size = size;
@@ -24,8 +23,24 @@ namespace GridCity.Fields.Buildings {
                     tex.RotateFlip(RotateFlipType.RotateNoneFlipY);
                     break;
             }
-            Texture = new Graphics.Texture(Name + "_" + orientation.ToString(), tex);
+
+            Texture = new GridCity.Graphics.Texture(Name + "_" + orientation.ToString(), tex);
         }
+
+        public enum Type {
+            RESIDENTIAL, WORK, SCHOOL
+        }
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        private string Name { get; set; }
+
+        private Tuple<uint, uint> Size { get; }
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
         public override string ToString() {
             return Name;
         }

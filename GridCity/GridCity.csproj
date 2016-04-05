@@ -146,22 +146,40 @@
     <Compile Include="Fields\Buildings\Building.cs" />
     <Compile Include="Fields\Buildings\OccupationalBuilding.cs" />
     <Compile Include="Fields\Buildings\ResidentialBuilding.cs" />
+    <Compile Include="Fields\Buildings\School.cs" />
+    <Compile Include="Fields\Buildings\University.cs" />
+    <Compile Include="Fields\Buildings\WorkBuilding.cs" />
     <Compile Include="Fields\ConnectableField.cs" />
+    <Compile Include="Fields\EmptyField.cs" />
     <Compile Include="Fields\Field.cs" />
     <Compile Include="Fields\Grid.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Gl\Buffer.cs" />
+    <Compile Include="Graphics\Gl\IndexBuffer.cs" />
     <Compile Include="Graphics\Gl\Program.cs" />
     <Compile Include="Graphics\Gl\Shader.cs" />
+    <Compile Include="Graphics\Gl\VertexBuffer.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
+    <Compile Include="Graphics\OrthographicCamera.cs" />
     <Compile Include="Graphics\Quad.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\Window.cs" />
     <Compile Include="ITickable.cs" />
+    <Compile Include="Pathfinding\NodeInfo.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="People\Activity.cs" />
     <Compile Include="People\Agent.cs" />
+    <Compile Include="People\Infant.cs" />
+    <Compile Include="People\Kid.cs" />
+    <Compile Include="People\Occupant.cs" />
+    <Compile Include="People\Pensioner.cs" />
+    <Compile Include="People\Student.cs" />
+    <Compile Include="People\Teen.cs" />
     <Compile Include="People\Traveller.cs" />
+    <Compile Include="People\Unemployed.cs" />
+    <Compile Include="People\Worker.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Pathfinding\Path.cs" />
     <Compile Include="People\Household.cs" />
@@ -177,12 +195,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Fields\Roads\Road.cs" />
-    <Compile Include="Pathfinding\Connection.cs" />
     <Compile Include="Fields\FieldFactory.cs" />
     <Compile Include="People\Resident.cs" />
+    <Compile Include="Utility\Clock.cs" />
     <Compile Include="Utility\Coordinate.cs" />
+    <Compile Include="Utility\GlobalCoordinate.cs" />
+    <Compile Include="Utility\LocalCoordinate.cs" />
     <Compile Include="Utility\Random.cs" />
-    <Compile Include="Utility\Units.cs" />
+    <Compile Include="Utility\Units\Distance.cs" />
+    <Compile Include="Utility\Units\Speed.cs" />
+    <Compile Include="Utility\Units\Time.cs" />
     <Compile Include="Utility\Vec2D.cs" />
   </ItemGroup>
   <ItemGroup>

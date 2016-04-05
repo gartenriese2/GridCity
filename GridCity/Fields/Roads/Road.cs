@@ -1,8 +1,9 @@
-﻿using System;
-using System.Drawing;
+﻿namespace GridCity.Fields.Roads {
 
-namespace GridCity.Fields.Roads {
-    class Road : ConnectableField {
+    using System.Drawing;
+
+    internal class Road : ConnectableField {
+
         internal Road(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, Bitmap tex, string name) : base(pos, layout, orientation) {
             switch (orientation) {
                 case Orientation_CW.NINETY:
@@ -18,7 +19,8 @@ namespace GridCity.Fields.Roads {
                     tex.RotateFlip(RotateFlipType.RotateNoneFlipY);
                     break;
             }
-            Texture = new Graphics.Texture(name + "_" + orientation.ToString(), tex);
+
+            Texture = new GridCity.Graphics.Texture(name + "_" + orientation.ToString(), tex);
         }
     }
 }

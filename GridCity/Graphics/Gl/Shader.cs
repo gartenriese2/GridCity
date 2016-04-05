@@ -1,24 +1,39 @@
-﻿using Pencil.Gaming.Graphics;
-using System;
-using System.Linq.Expressions;
+﻿namespace GridCity.Graphics.Gl {
 
-namespace GridCity.Graphics.Gl {
-    class Shader {
-        public uint Handle { get; set; }
+    using System;
+    using Pencil.Gaming.Graphics;
+
+    internal class Shader {
+
         public Shader(ShaderType type, string code) {
-            if (!allocate(type)) return;
-            if (!compile(code)) return;
+            if (!Allocate(type)) {
+                return;
+            }
+
+            if (!Compile(code)) {
+                return;
+            }
         }
-        
-        private bool allocate(ShaderType type) {
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        public uint Handle { get; set; }
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
+        private bool Allocate(ShaderType type) {
             Handle = GL.CreateShader(type);
             if (Handle == 0) {
                 Console.WriteLine("Error allocating shader object");
                 return false;
             }
+
             return true;
         }
-        bool compile(string code) {
+
+        private bool Compile(string code) {
             GL.ShaderSource(Handle, code);
             GL.CompileShader(Handle);
 
@@ -30,7 +45,8 @@ namespace GridCity.Graphics.Gl {
                 Console.WriteLine("Shader compiling failed with the following error:\n" + log);
                 return false;
             }
-	        return true;
+
+            return true;
         }
     }
 }
