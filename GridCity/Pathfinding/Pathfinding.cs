@@ -29,7 +29,7 @@
                 return null;
             }
 
-            List<Node> closedSet = new List<Node>();
+            HashSet<Node> closedSet = new HashSet<Node>();
             List<Tuple<Node, Traveller>> openSet = new List<Tuple<Node, Traveller>> { Tuple.Create(from, traveller) };
             Dictionary<Node, Tuple<Node, PathInfo>> cameFrom = new Dictionary<Node, Tuple<Node, PathInfo>>();
             Dictionary<Node, Time> gScore = new Dictionary<Node, Time>();
@@ -38,8 +38,8 @@
             fScore.Add(from, HeuristicTimeEstimate(from, to));
 
             while (openSet.Count != 0) {
-                var ordered = fScore.OrderBy(x => x.Value);
-                Node currentNode = ordered.First().Key;
+                Node currentNode = fScore.Aggregate((l, r) => l.Value < r.Value ? l : r).Key;
+
                 if (currentNode == to) {
                     return Tuple.Create(ReconstructPath(cameFrom, to), gScore[currentNode]);
                 }
