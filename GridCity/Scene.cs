@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using Fields;
     using Fields.Buildings;
     using People;
     using Utility;
-
+    
     internal class Scene {
 
         public Scene(Grid grid) {
@@ -237,25 +238,57 @@
             var wbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.WORKER)).ToList();
             var sbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList();
             var ubs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.STUDENT)).ToList();
+
+            List<Resident> totalResidents = new List<Resident>();
             foreach (var rb in rbs) {
-                foreach (var household in rb.Households) {
-                    foreach (var resident in household.Residents) {
-                        if (resident is Worker) {
-                            if (!((Worker)resident).FindOccupation(wbs)) {
-                                throw new NotSupportedException("All workers need to find jobs!");
-                            }
-                        } else if (resident is Teen) {
-                            if (!((Teen)resident).FindOccupation(sbs)) {
-                                throw new NotSupportedException("All teens need to find a school!");
-                            }
-                        } else if (resident is Student) {
-                            if (!((Student)resident).FindOccupation(ubs)) {
-                                throw new NotSupportedException("All students need to find a university!");
-                            }
-                        }
+                totalResidents.AddRange(rb.Residents);
+            }
+
+            int numCores = Environment.ProcessorCount;
+            Debug.Assert(numCores > 0, "there should be at least 1 core!");
+            if (numCores == 1) {
+                FindOccupations(totalResidents, wbs, sbs, ubs);
+            } else {
+                int residentsPerCore = totalResidents.Count / numCores;
+                int residentsForLastCore = totalResidents.Count - (residentsPerCore * (numCores - 1));
+                List<Task> tasks = new List<Task>();
+                for (int i = 0; i < numCores - 1; ++i) {
+                    tasks.Add(FindOccupationsAsync(totalResidents.GetRange(i * residentsPerCore, residentsPerCore), wbs, sbs, ubs));
+                }
+
+                tasks.Add(FindOccupationsAsync(totalResidents.GetRange((numCores - 1) * residentsPerCore, residentsForLastCore), wbs, sbs, ubs));
+                Task allTasks = Task.WhenAll(tasks.ToArray());
+                FindOccupationsAsync(allTasks);
+                allTasks.Wait();
+            }
+        }
+
+        private async void FindOccupationsAsync(Task task) {
+            await task;
+        }
+
+        private void FindOccupations(List<Resident> residents, List<OccupationalBuilding> wbs, List<OccupationalBuilding> sbs, List<OccupationalBuilding> ubs) {
+            foreach (var resident in residents) {
+                if (resident is Worker) {
+                    if (!((Worker)resident).FindOccupation(wbs)) {
+                        throw new NotSupportedException("All workers need to find jobs!");
+                    }
+                } else if (resident is Teen) {
+                    if (!((Teen)resident).FindOccupation(sbs)) {
+                        throw new NotSupportedException("All teens need to find a school!");
+                    }
+                } else if (resident is Student) {
+                    if (!((Student)resident).FindOccupation(ubs)) {
+                        throw new NotSupportedException("All students need to find a university!");
                     }
                 }
             }
+
+            Console.WriteLine("This thread is done with finding occupations!");
+        }
+
+        private Task FindOccupationsAsync(List<Resident> residents, List<OccupationalBuilding> wbs, List<OccupationalBuilding> sbs, List<OccupationalBuilding> ubs) {
+            return Task.Run(() => FindOccupations(residents, wbs, sbs, ubs));
         }
     }
 }
