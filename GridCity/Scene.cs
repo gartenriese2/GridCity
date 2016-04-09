@@ -267,19 +267,30 @@
             await task;
         }
 
+        private bool FindOccupation<T>(T resident, List<OccupationalBuilding> obs) where T : Occupant {
+            int loopCounter = 0;
+            bool foundOccupation = resident.FindOccupation(obs);
+            while (!foundOccupation && loopCounter < 10) {
+                ++loopCounter;
+                foundOccupation = resident.FindOccupation(obs);
+            }
+
+            return foundOccupation;
+        }
+
         private void FindOccupations(List<Resident> residents, List<OccupationalBuilding> wbs, List<OccupationalBuilding> sbs, List<OccupationalBuilding> ubs) {
             foreach (var resident in residents) {
                 if (resident is Worker) {
-                    if (!((Worker)resident).FindOccupation(wbs)) {
-                        throw new NotSupportedException("All workers need to find jobs!");
+                    if (!FindOccupation(resident as Worker, wbs)) {
+                        throw new Exception("Worker did not find a job");
                     }
                 } else if (resident is Teen) {
-                    if (!((Teen)resident).FindOccupation(sbs)) {
-                        throw new NotSupportedException("All teens need to find a school!");
+                    if (!FindOccupation(resident as Teen, sbs)) {
+                        throw new Exception("Teen did not find a school");
                     }
                 } else if (resident is Student) {
-                    if (!((Student)resident).FindOccupation(ubs)) {
-                        throw new NotSupportedException("All students need to find a university!");
+                    if (!FindOccupation(resident as Student, ubs)) {
+                        throw new Exception("Student did not find a university");
                     }
                 }
             }
