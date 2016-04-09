@@ -15,15 +15,23 @@
     internal class Game {
 
         public Game(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight) {
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
             Window = new Window(windowWidth, windowHeight);
             Prog = new Program();
             Prog.AttachShaders(new Shader(ShaderType.VertexShader, Resources.test_vert), new Shader(ShaderType.FragmentShader, Resources.test_frag));
             Quad = new Quad();
             float div = windowWidth / gridWidth;
             Cam = new OrthographicCamera(new Vector3(gridWidth / 2, gridHeight / 2, 1), windowWidth / div, windowHeight / div, 0.1f, 1000f);
+            sw.Stop();
+            Console.WriteLine("Graphics initialization took " + sw.ElapsedMilliseconds + "ms");
 
+            sw.Restart();
             Grid = new Grid(gridWidth, gridHeight);
             var scene = new Scene(Grid);
+            sw.Stop();
+            Console.WriteLine("Scene initialization took " + sw.ElapsedMilliseconds + "ms");
             scene.PrintResidents();
         }
 
