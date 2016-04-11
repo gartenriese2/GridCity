@@ -12,7 +12,8 @@
             Height = (int)height;
             Glfw.Init();
             Ptr = Glfw.CreateWindow((int)width, (int)height, "GridCity", GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
-            Glfw.MakeContextCurrent(Ptr);
+            MakeCurrent();
+
             GL.ClearColor(Color4.Black);
 
             Glfw.SetKeyCallback(Ptr, Keyfun);
@@ -34,6 +35,10 @@
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
+        public void MakeCurrent() {
+            Glfw.MakeContextCurrent(Ptr);
+        }
+
         public bool Tick(Time elapsedTime) {
             Glfw.PollEvents();
             Glfw.SwapBuffers(Ptr);
