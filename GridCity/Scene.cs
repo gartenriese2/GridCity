@@ -9,26 +9,55 @@
     using Fields.Buildings;
     using People;
     using Utility;
-    
+
     internal class Scene {
 
-        public Scene(Grid grid) {
-            Grid = grid;
+        public Scene(uint gridWidth, uint gridHeight) {
+            Grid = new Grid(gridWidth, gridHeight);
             InitRoads();
             InitBuildings();
-            InitOccupations();
         }
 
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        private Grid Grid { get; }
+        public Grid Grid { get; }
 
         private FieldFactory Factory { get; } = new FieldFactory();
 
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
+        public void InitOccupations() {
+            var rbs = Grid.GetFields<ResidentialBuilding>();
+            var wbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.WORKER)).ToList();
+            var sbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList();
+            var ubs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.STUDENT)).ToList();
+
+            List<Resident> totalResidents = new List<Resident>();
+            foreach (var rb in rbs) {
+                totalResidents.AddRange(rb.Residents);
+            }
+
+            int numCores = Environment.ProcessorCount;
+            Debug.Assert(numCores > 0, "there should be at least 1 core!");
+            if (numCores == 1) {
+                FindOccupations(totalResidents, wbs, sbs, ubs);
+            } else {
+                int residentsPerCore = totalResidents.Count / numCores;
+                int residentsForLastCore = totalResidents.Count - (residentsPerCore * (numCores - 1));
+                List<Task> tasks = new List<Task>();
+                for (int i = 0; i < numCores - 1; ++i) {
+                    tasks.Add(FindOccupationsAsync(totalResidents.GetRange(i * residentsPerCore, residentsPerCore), wbs, sbs, ubs));
+                }
+
+                tasks.Add(FindOccupationsAsync(totalResidents.GetRange((numCores - 1) * residentsPerCore, residentsForLastCore), wbs, sbs, ubs));
+                Task allTasks = Task.WhenAll(tasks.ToArray());
+                FindOccupationsAsync(allTasks);
+                allTasks.Wait();
+            }
+        }
+
         public void PrintResidents() {
             uint pensioners = 0;
             uint workers = 0;
@@ -233,36 +262,6 @@
             AddResidentialBuilding("MediumResidentialBuilding", ConnectableField.Orientation_CW.TWOSEVENTY, 9, 8);
         }
 
-        private void InitOccupations() {
-            var rbs = Grid.GetFields<ResidentialBuilding>();
-            var wbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.WORKER)).ToList();
-            var sbs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.TEEN)).ToList();
-            var ubs = Grid.GetFields<OccupationalBuilding>().Where(x => x.HasOpenOccupations(Resident.Type.STUDENT)).ToList();
-
-            List<Resident> totalResidents = new List<Resident>();
-            foreach (var rb in rbs) {
-                totalResidents.AddRange(rb.Residents);
-            }
-
-            int numCores = Environment.ProcessorCount;
-            Debug.Assert(numCores > 0, "there should be at least 1 core!");
-            if (numCores == 1) {
-                FindOccupations(totalResidents, wbs, sbs, ubs);
-            } else {
-                int residentsPerCore = totalResidents.Count / numCores;
-                int residentsForLastCore = totalResidents.Count - (residentsPerCore * (numCores - 1));
-                List<Task> tasks = new List<Task>();
-                for (int i = 0; i < numCores - 1; ++i) {
-                    tasks.Add(FindOccupationsAsync(totalResidents.GetRange(i * residentsPerCore, residentsPerCore), wbs, sbs, ubs));
-                }
-
-                tasks.Add(FindOccupationsAsync(totalResidents.GetRange((numCores - 1) * residentsPerCore, residentsForLastCore), wbs, sbs, ubs));
-                Task allTasks = Task.WhenAll(tasks.ToArray());
-                FindOccupationsAsync(allTasks);
-                allTasks.Wait();
-            }
-        }
-
         private async void FindOccupationsAsync(Task task) {
             await task;
         }
@@ -270,7 +269,7 @@
         private bool FindOccupation<T>(T resident, List<OccupationalBuilding> obs) where T : Occupant {
             int loopCounter = 0;
             bool foundOccupation = resident.FindOccupation(obs);
-            while (!foundOccupation && loopCounter < 10) {
+            while (!foundOccupation && loopCounter < 1000) { // TODO: get rid of magic number, e.g. use stopwatch
                 ++loopCounter;
                 foundOccupation = resident.FindOccupation(obs);
             }
@@ -295,7 +294,7 @@
                 }
             }
 
-            Console.WriteLine("This thread is done with finding occupations!");
+            ////Console.WriteLine("This thread is done with finding occupations!");
         }
 
         private Task FindOccupationsAsync(List<Resident> residents, List<OccupationalBuilding> wbs, List<OccupationalBuilding> sbs, List<OccupationalBuilding> ubs) {
