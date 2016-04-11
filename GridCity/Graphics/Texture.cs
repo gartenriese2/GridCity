@@ -8,11 +8,10 @@
     
     internal class Texture {
 
-        public Texture(string id, RotateFlipType rotateFlipType = RotateFlipType.RotateNoneFlipNone) {
+        public Texture(string id) {
             ID = id;
             if (!Map.ContainsKey(id)) {
                 var bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(id);
-                bmp.RotateFlip(rotateFlipType);
                 Size = Tuple.Create(bmp.Width, bmp.Height);
                 Map.Add(id, GL.Utils.LoadImage(bmp));
             }
