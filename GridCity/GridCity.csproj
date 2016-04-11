@@ -216,6 +216,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Paths.xml" />
+    <None Include="Resources\Textures\Loading3.bmp" />
+    <None Include="Resources\Textures\Loading2.bmp" />
+    <None Include="Resources\Textures\Loading1.bmp" />
     <None Include="Resources\Textures\UniversityBuilding.bmp" />
     <None Include="Resources\Textures\SchoolBuilding.bmp" />
     <None Include="Resources\Textures\SmallResidentialBuilding.bmp" />
