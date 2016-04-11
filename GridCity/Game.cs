@@ -1,8 +1,10 @@
 ﻿namespace GridCity {
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using Fields;
     using Graphics;
     using Graphics.Gl;
@@ -11,7 +13,7 @@
     using Properties;
     using Utility;
     using Utility.Units;
-
+    
     internal class Game {
 
         public Game(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight) {
@@ -24,21 +26,32 @@
             Quad = new Quad();
             float div = windowWidth / gridWidth;
             Cam = new OrthographicCamera(new Vector3(gridWidth / 2, gridHeight / 2, 1), windowWidth / div, windowHeight / div, 0.1f, 1000f);
+            LoadingTextures.Add(new Texture("Loading1", System.Drawing.RotateFlipType.RotateNoneFlipY));
+            LoadingTextures.Add(new Texture("Loading2", System.Drawing.RotateFlipType.RotateNoneFlipY));
+            LoadingTextures.Add(new Texture("Loading3", System.Drawing.RotateFlipType.RotateNoneFlipY));
             sw.Stop();
             Console.WriteLine("Graphics initialization took " + sw.ElapsedMilliseconds + "ms");
 
             sw.Restart();
-            Grid = new Grid(gridWidth, gridHeight);
-            var scene = new Scene(Grid);
+            Scene = new Scene(gridWidth, gridHeight);
             sw.Stop();
             Console.WriteLine("Scene initialization took " + sw.ElapsedMilliseconds + "ms");
-            scene.PrintResidents();
+
+            Task initSceneTask = Task.Run(() => InitScene());
+            sw.Restart();
+            while (!initSceneTask.IsCompleted) {
+                int idx = ((int)sw.ElapsedMilliseconds / 500) % LoadingTextures.Count;
+                StartGraphics();
+                DrawLoadingScreen(LoadingTextures[idx]);
+                EndGraphics();
+                Window.Tick(new Time(0));
+            }
         }
 
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        private Grid Grid { get; }
+        private Scene Scene { get; set; }
 
         private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
 
@@ -49,6 +62,8 @@
         private Quad Quad { get; }
 
         private Camera Cam { get; }
+
+        private List<Texture> LoadingTextures { get; } = new List<Texture>();
 
         //---------------------------------------------------------------------
         // Methods
@@ -79,7 +94,7 @@
                  *  Simulation
                  */
                 var simulatedSeconds = elapsedTime * Date.SpeedFactor;
-                var rbs = Grid.GetFields<Fields.Buildings.ResidentialBuilding>();
+                var rbs = Scene.Grid.GetFields<Fields.Buildings.ResidentialBuilding>();
                 foreach (var rb in rbs) {
                     foreach (var hh in rb.Households) {
                         foreach (var res in hh.Residents) {
@@ -136,7 +151,25 @@
             }
         }
 
+        private void InitScene() {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Scene.InitOccupations();
+            sw.Stop();
+            Console.WriteLine("Occupation initialization took " + sw.ElapsedMilliseconds + "ms");
+            Scene.PrintResidents();
+        }
+
         private void DoGraphics() {
+            StartGraphics();
+
+            DrawFields();
+            DrawAgents();
+
+            EndGraphics();
+        }
+
+        private void StartGraphics() {
             GL.Viewport(0, 0, Window.Width, Window.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -147,30 +180,50 @@
             Prog.SetUniform1("tex", 0);
 
             Quad.Bind();
+        }
 
-            // draw fields
-            for (uint w = 0; w < Grid.Width; ++w) {
-                for (uint h = 0; h < Grid.Height; ++h) {
+        private void EndGraphics() {
+            Quad.Unbind();
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.UseProgram(0);
+        }
+
+        private void DrawTexture(Texture tex) {
+            GL.BindTexture(TextureTarget.Texture2D, tex.Handle);
+            Quad.Draw();
+        }
+
+        private void DrawLoadingScreen(Texture tex) {
+            float camWidth = ((OrthographicCamera)Cam).Width;
+            float camHeight = ((OrthographicCamera)Cam).Height;
+            float scale = Math.Max(camWidth, camHeight);
+            Matrix modelMatrix = Matrix.CreateScale(scale);
+            Prog.SetUniform("model_matrix", modelMatrix);
+            DrawTexture(tex);
+        }
+
+        private void DrawFields() {
+            for (uint w = 0; w < Scene.Grid.Width; ++w) {
+                for (uint h = 0; h < Scene.Grid.Height; ++h) {
                     Prog.SetUniform("model_matrix", Matrix.CreateTranslation(new Vector3(w, h, 0)));
-                    Field f = Grid.GetField<Field>(new Utility.GlobalCoordinate(w, h));
-                    GL.BindTexture(TextureTarget.Texture2D, f.Texture.Handle);
-                    Quad.Draw();
+                    Field f = Scene.Grid.GetField<Field>(new GlobalCoordinate(w, h));
+                    DrawTexture(f.Texture);
                 }
             }
+        }
 
-            // draw agents
+        private void DrawAgents() {
             foreach (var agent in People.Agent.Agents) {
                 if (agent.IsVisible) {
                     var pos = agent.Trace.Last();
                     Prog.SetUniform("model_matrix", Matrix.CreateScale(0.1f) * Matrix.CreateTranslation(new Vector3((pos.X - 0.5f) / 8, (pos.Y - 0.5f) / 8, 0)));
-                    GL.BindTexture(TextureTarget.Texture2D, agent.Texture.Handle);
-                    Quad.Draw();
+                    DrawTexture(agent.Texture);
                 }
             }
+        }
 
-            Quad.Unbind();
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-            GL.UseProgram(0);
+        private async void InitSceneAsync(Task task) {
+            await task;
         }
     }
 }
