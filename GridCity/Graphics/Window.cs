@@ -7,16 +7,19 @@
 
     internal class Window : ITickable {
 
-        public Window(uint width, uint height) {
+        public Window(uint width, uint height, Utility.Coordinate position) {
             Width = (int)width;
             Height = (int)height;
+            Position = position;
             Glfw.Init();
             Ptr = Glfw.CreateWindow((int)width, (int)height, "GridCity", GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
             MakeCurrent();
+            Glfw.SetWindowPos(Ptr, (int)Position.X, (int)Position.Y);
 
             GL.ClearColor(Color4.Black);
 
-            Glfw.SetKeyCallback(Ptr, Keyfun);
+            Glfw.SetKeyCallback(Ptr, KeyFun);
+            Glfw.SetWindowPosCallback(Ptr, WindowPosFun);
         }
 
         //---------------------------------------------------------------------
@@ -25,6 +28,8 @@
         public int Width { get; }
 
         public int Height { get; }
+
+        private Utility.Coordinate Position { get; }
 
         private GlfwWindowPtr Ptr { get; }
         
@@ -54,7 +59,7 @@
             return false;
         }
 
-        private void Keyfun(GlfwWindowPtr wnd, Key key, int scanCode, KeyAction action, KeyModifiers mods) {
+        private void KeyFun(GlfwWindowPtr wnd, Key key, int scanCode, KeyAction action, KeyModifiers mods) {
             if (!PressedKeys.Contains(key) && (action == KeyAction.Press || action == KeyAction.Repeat)) {
                 PressedKeys.Add(key);
             }
@@ -62,6 +67,10 @@
             if (key == Key.Escape) {
                 ShouldClose = true;
             }
+        }
+
+        private void WindowPosFun(GlfwWindowPtr wnd, int x, int y) {
+            Glfw.SetWindowPos(Ptr, (int)Position.X, (int)Position.Y);
         }
     }
 }
