@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,14 +14,71 @@
     using Properties;
     using Utility;
     using Utility.Units;
+    
+    internal class Game : INotifyPropertyChanged {
 
-    internal class Game {
+        private string dateOutput = "NaN";
 
-        public Game(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight) {
+        private string speedOutput = ">";
+
+        private bool isInitialized = false;
+
+        //---------------------------------------------------------------------
+        // Events
+        //---------------------------------------------------------------------
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+        public string DateOutput {
+            get {
+                return dateOutput;
+            }
+
+            set {
+                if (dateOutput != value) {
+                    dateOutput = value;
+                    NotifyPropertyChanged(nameof(DateOutput));
+                }
+            }
+        }
+
+        public string SpeedOutput {
+            get {
+                return speedOutput;
+            }
+
+            set {
+                if (speedOutput != value) {
+                    speedOutput = value;
+                    NotifyPropertyChanged(nameof(SpeedOutput));
+                }
+            }
+        }
+
+        private Scene Scene { get; set; }
+
+        private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
+
+        private Window Window { get; set; }
+
+        private Program Prog { get; set; }
+
+        private Quad Quad { get; set; }
+
+        private Camera Cam { get; set; }
+
+        private List<Texture> LoadingTextures { get; } = new List<Texture>();
+
+        //---------------------------------------------------------------------
+        // Methods
+        //---------------------------------------------------------------------
+        public void Init(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight, uint windowPosX, uint windowPosY) {
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            Window = new Window(windowWidth, windowHeight);
+            Window = new Window(windowWidth, windowHeight, new Coordinate(windowPosX, windowPosY));
             Prog = new Program();
             Prog.AttachShaders(new Shader(ShaderType.VertexShader, Resources.test_vert), new Shader(ShaderType.FragmentShader, Resources.test_frag));
             Quad = new Quad();
@@ -46,31 +104,14 @@
                 EndGraphics();
                 Window.Tick(new Time(0));
             }
+
+            isInitialized = true;
         }
 
-        //---------------------------------------------------------------------
-        // Properties
-        //---------------------------------------------------------------------
-        private Scene Scene { get; set; }
-
-        private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
-
-        private Window Window { get; }
-
-        private Program Prog { get; }
-
-        private Quad Quad { get; }
-
-        private Camera Cam { get; }
-
-        private List<Texture> LoadingTextures { get; } = new List<Texture>();
-
-        //---------------------------------------------------------------------
-        // Methods
-        //---------------------------------------------------------------------
         public void Loop() {
+            Debug.Assert(isInitialized, "Game is not initialized!");
+
             Stopwatch stopwatch = Stopwatch.StartNew();
-            Time accumulatedTime = new Time(0);
             while (true) {
                 int ms = (int)stopwatch.ElapsedMilliseconds;
                 if (ms < 1) {
@@ -81,13 +122,11 @@
                 Time elapsedTime = new Time(ms / 1000f);
 
                 /*
-                 *  Time
+                 *  Date
                  */
                 Date.Tick(elapsedTime);
-                accumulatedTime += elapsedTime;
-                if (accumulatedTime.Seconds > 1f) {
-                    accumulatedTime.Seconds %= 1f;
-                    Console.WriteLine(Date);
+                if (DateOutput != Date.ToString()) {
+                    DateOutput = Date.ToString();
                 }
 
                 /*
@@ -113,12 +152,14 @@
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageUp)) {
                     if (Date.SpeedFactor < 2048) {
                         Date.SpeedFactor *= 2;
+                        SetSpeedString();
                     }
                 }
 
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageDown)) {
                     if (Date.SpeedFactor > 1) {
                         Date.SpeedFactor /= 2;
+                        SetSpeedString();
                     }
                 }
 
@@ -149,6 +190,10 @@
                     break;
                 }
             }
+        }
+
+        protected virtual void NotifyPropertyChanged(string propertyName) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitScene() {
@@ -222,8 +267,13 @@
             }
         }
 
-        private async void InitSceneAsync(Task task) {
-            await task;
+        private void SetSpeedString() {
+            string str = string.Empty;
+            for (int i = 1; i <= Date.SpeedFactor; i *= 2) {
+                str += ">";
+            }
+
+            SpeedOutput = str;
         }
     }
 }

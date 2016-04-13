@@ -1,0 +1,15 @@
+﻿<Window x:Class="GridCity.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        AllowsTransparency="True" WindowStyle="None"
+        Loaded="Window_Loaded">
+    <Window.Background>
+        <SolidColorBrush Opacity="0.0" Color="White"/>
+    </Window.Background>
+    <TextBlock Background="White" Width="120" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30">
+        <StackPanel Orientation="Vertical">
+            <Label FontWeight="ExtraBold" Content="{Binding Path=DateOutput, UpdateSourceTrigger=PropertyChanged}"></Label>
+            <Label FontWeight="ExtraBold" Content="{Binding Path=SpeedOutput, UpdateSourceTrigger=PropertyChanged}"></Label>
+        </StackPanel>
+    </TextBlock>
+</Window>

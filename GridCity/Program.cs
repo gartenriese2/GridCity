@@ -1,10 +1,13 @@
-﻿public class MainClass {
+﻿using System;
+using System.Windows;
 
+public class MainClass {
     //-------------------------------------------------------------------------
     // Methods
     //-------------------------------------------------------------------------
+    [STAThread]
     public static void Main(string[] args) {
-        GridCity.Game game = new GridCity.Game(20, 20, 1600, 1200);
-        game.Loop();
+        Application app = new Application();
+        app.Run(new GridCity.GUI.MainWindow());
     }
 }
