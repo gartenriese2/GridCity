@@ -59,5 +59,13 @@
             Game.Loop();
             Environment.Exit(0);
         }
+
+        private void ButtonMinus_Click(object sender, RoutedEventArgs e) {
+            Game.TrySubtractSpeed();
+        }
+
+        private void ButtonPlus_Click(object sender, RoutedEventArgs e) {
+            Game.TryAddSpeed();
+        }
     }
 }

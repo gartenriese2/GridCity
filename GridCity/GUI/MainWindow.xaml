@@ -6,10 +6,26 @@
     <Window.Background>
         <SolidColorBrush Opacity="0.0" Color="White"/>
     </Window.Background>
-    <TextBlock Background="White" Width="120" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30">
-        <StackPanel Orientation="Vertical">
-            <Label FontWeight="ExtraBold" Content="{Binding Path=DateOutput, UpdateSourceTrigger=PropertyChanged}"></Label>
-            <Label FontWeight="ExtraBold" Content="{Binding Path=SpeedOutput, UpdateSourceTrigger=PropertyChanged}"></Label>
-        </StackPanel>
+    <TextBlock Background="White" Width="150" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" FontWeight="ExtraBold" Content="{Binding Path=DateOutput, UpdateSourceTrigger=PropertyChanged}"></Label>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Width="20" Content="-" Click="ButtonMinus_Click"></Button>
+                <Label Grid.Column="1" FontWeight="Bold" Content="{Binding Path=SpeedOutput, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="2" Width="20" Content="+" Click="ButtonPlus_Click"></Button>
+            </Grid>
+        </Grid>
     </TextBlock>
 </Window>

@@ -57,9 +57,9 @@
             }
         }
 
-        private Scene Scene { get; set; }
-
         private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
+
+        private Scene Scene { get; set; }
 
         private Window Window { get; set; }
 
@@ -150,17 +150,11 @@
                  *  Input
                  */
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageUp)) {
-                    if (Date.SpeedFactor < 2048) {
-                        Date.SpeedFactor *= 2;
-                        SetSpeedString();
-                    }
+                    TryAddSpeed();
                 }
 
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageDown)) {
-                    if (Date.SpeedFactor > 1) {
-                        Date.SpeedFactor /= 2;
-                        SetSpeedString();
-                    }
+                    TrySubtractSpeed();
                 }
 
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.Left)) {
@@ -190,6 +184,26 @@
                     break;
                 }
             }
+        }
+
+        public bool TryAddSpeed() {
+            if (Date.SpeedFactor < 2048) {
+                Date.SpeedFactor *= 2;
+                SetSpeedString();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TrySubtractSpeed() {
+            if (Date.SpeedFactor > 1) {
+                Date.SpeedFactor /= 2;
+                SetSpeedString();
+                return true;
+            }
+
+            return false;
         }
 
         protected virtual void NotifyPropertyChanged(string propertyName) {
