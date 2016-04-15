@@ -50,11 +50,11 @@
         }
 
         public static Speed operator /(Distance d, Time t) {
-            return new Speed(d.Meters / t.Seconds);
+            return new Speed(d.Meters / (float)t.Seconds);
         }
 
         public static Time operator /(Distance d, Speed v) {
-            return new Time(d.Meters / v.MS);
+            return Time.FromSeconds(d.Meters / v.MS);
         }
 
         public override string ToString() {

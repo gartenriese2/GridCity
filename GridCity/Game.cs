@@ -102,7 +102,7 @@
                 StartGraphics();
                 DrawLoadingScreen(LoadingTextures[idx]);
                 EndGraphics();
-                Window.Tick(new Time(0));
+                Window.Tick(Time.Zero);
             }
 
             isInitialized = true;
@@ -119,7 +119,7 @@
                 }
 
                 stopwatch.Restart();
-                Time elapsedTime = new Time(ms / 1000f);
+                Time elapsedTime = Time.FromMilliseconds(ms);
 
                 /*
                  *  Date

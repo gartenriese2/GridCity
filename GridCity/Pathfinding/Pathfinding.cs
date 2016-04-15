@@ -33,7 +33,7 @@
             List<Tuple<Node, Traveller>> openSet = new List<Tuple<Node, Traveller>> { Tuple.Create(from, traveller) };
             Dictionary<Node, Tuple<Node, PathInfo>> cameFrom = new Dictionary<Node, Tuple<Node, PathInfo>>();
             Dictionary<Node, Time> gScore = new Dictionary<Node, Time>();
-            gScore.Add(from, new Time(0));
+            gScore.Add(from, Time.Zero);
             Dictionary<Node, Time> fScore = new Dictionary<Node, Time>();
             fScore.Add(from, HeuristicTimeEstimate(from, to));
 

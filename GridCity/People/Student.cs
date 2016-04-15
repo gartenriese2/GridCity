@@ -27,36 +27,36 @@
             if (RandomGenerator.Get() < 0.9) {
                 var to = RandomGenerator.GetFromList(possibleStartTimes) - timeToOccupation;
                 var from = RandomGenerator.GetFromList(possibleEndTimes);
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.CreateRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.CreateRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.CreateRandomClockBetween(to, to - Time.FromMinutes(10))), Path = PathToOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.MONDAY, Clock.CreateRandomClockBetween(from, from + Time.FromMinutes(10))), Path = PathFromOccupation });
             }
 
             if (RandomGenerator.Get() < 0.9) {
                 var to = RandomGenerator.GetFromList(possibleStartTimes) - timeToOccupation;
                 var from = RandomGenerator.GetFromList(possibleEndTimes);
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.CreateRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.CreateRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.CreateRandomClockBetween(to, to - Time.FromMinutes(10))), Path = PathToOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.TUESDAY, Clock.CreateRandomClockBetween(from, from + Time.FromMinutes(10))), Path = PathFromOccupation });
             }
 
             if (RandomGenerator.Get() < 0.9) {
                 var to = RandomGenerator.GetFromList(possibleStartTimes) - timeToOccupation;
                 var from = RandomGenerator.GetFromList(possibleEndTimes);
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.CreateRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.CreateRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.CreateRandomClockBetween(to, to - Time.FromMinutes(10))), Path = PathToOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.WEDNESDAY, Clock.CreateRandomClockBetween(from, from + Time.FromMinutes(10))), Path = PathFromOccupation });
             }
 
             if (RandomGenerator.Get() < 0.9) {
                 var to = RandomGenerator.GetFromList(possibleStartTimes) - timeToOccupation;
                 var from = RandomGenerator.GetFromList(possibleEndTimes);
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.CreateRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.CreateRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.CreateRandomClockBetween(to, to - Time.FromMinutes(10))), Path = PathToOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.THURSDAY, Clock.CreateRandomClockBetween(from, from + Time.FromMinutes(10))), Path = PathFromOccupation });
             }
 
             if (RandomGenerator.Get() < 0.5) {
                 var to = RandomGenerator.GetFromList(possibleStartTimes) - timeToOccupation;
                 var from = RandomGenerator.GetFromList(possibleEndTimes);
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.CreateRandomClockBetween(to, to - new Time(600))), Path = PathToOccupation });
-                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.CreateRandomClockBetween(from, from + new Time(600))), Path = PathFromOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.CreateRandomClockBetween(to, to - Time.FromMinutes(10))), Path = PathToOccupation });
+                Activities.Enqueue(new Activity { Date = new Date(Date.Weekday.FRIDAY, Clock.CreateRandomClockBetween(from, from + Time.FromMinutes(10))), Path = PathFromOccupation });
             }
 
             return true;

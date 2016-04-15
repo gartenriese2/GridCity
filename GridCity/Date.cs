@@ -21,7 +21,7 @@
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        public Clock CurrentClock { get; set; } = new Clock(new Time(0));
+        public Clock CurrentClock { get; set; } = Clock.Zero;
 
         public Weekday CurrentDay { get; set; } = Weekday.MONDAY;
 
@@ -34,11 +34,11 @@
             return WeekdayToString(CurrentDay) + ", " + CurrentClock;
         }
 
-        public bool Tick(Time elapsed) {
-            Debug.Assert(elapsed.Seconds < SecondsADay, "elapsed seconds should not be more than a whole day");
-            var oldHour = CurrentClock.Hour;
-            CurrentClock += new Time(SpeedFactor * elapsed.Seconds);
-            if (oldHour > CurrentClock.Hour) {
+        public bool Tick(Time elapsedTime) {
+            Debug.Assert(elapsedTime.Seconds < SecondsADay, "elapsed seconds should not be more than a whole day");
+            var oldHour = CurrentClock.Hours;
+            CurrentClock += Time.FromSeconds((float)(SpeedFactor * elapsedTime.Seconds));
+            if (oldHour > CurrentClock.Hours) {
                 CurrentDay = GetNextDay(CurrentDay);
             }
 

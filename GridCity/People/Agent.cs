@@ -36,7 +36,7 @@
 
         private Pathfinding.PathInfo Info { get; set; }
 
-        private Time CurrentWait { get; set; } = new Time(0);
+        private Time CurrentWait { get; set; } = Time.Zero;
 
         private Coordinate Position { get; set; }
 
@@ -52,7 +52,7 @@
             return "Agent at " + Position;
         }
 
-        public bool Tick(Time elapsedSeconds) {
+        public bool Tick(Time elapsedTime) {
             if (!IsMoving) {
                 return false;
             }
@@ -61,19 +61,19 @@
             ////    Console.WriteLine("Warning: elapsedSeconds is pretty big: " + elapsedSeconds);
             ////}
 
-            if (CurrentWait < elapsedSeconds) {
+            if (CurrentWait < elapsedTime) {
                 CheckOtherAgents();
             }
 
-            if (CurrentWait >= elapsedSeconds) {
-                CurrentWait -= elapsedSeconds;
+            if (CurrentWait >= elapsedTime) {
+                CurrentWait -= elapsedTime;
                 return true;
             }
 
-            Time secondsLeft = new Time((float)elapsedSeconds);
+            Time secondsLeft = new Time(elapsedTime);
             if (CurrentWait.Seconds > 0) {
                 secondsLeft -= CurrentWait;
-                CurrentWait.Seconds = 0;
+                CurrentWait = Time.Zero;
             }
 
             var distToNextNode = (new Vec2D(NextNode.WorldPosition) - new Vec2D(Position)).Length;
@@ -94,14 +94,14 @@
                     IsVisible = !Info.Hidden;
                     Position = PreviousNode.WorldPosition;
                     if (PreviousNode.Info.TimePenalties.ContainsKey(Info.Type)) { // time penalty
-                        CurrentWait.Seconds = PreviousNode.Info.TimePenalties[Info.Type].Seconds;
+                        CurrentWait = new Time(PreviousNode.Info.TimePenalties[Info.Type]);
                         if (CurrentWait >= secondsLeft) {
                             CurrentWait -= secondsLeft;
                             Trace.Add(new Coordinate(Position.X, Position.Y));
                             return true;
                         } else {
                             secondsLeft -= CurrentWait;
-                            CurrentWait.Seconds = 0;
+                            CurrentWait = Time.Zero;
                         }
                     }
 
@@ -123,7 +123,7 @@
 
         public void Dispatch(Pathfinding.Path path, Time alreadyElapsedTime) {
             Dispatch(path);
-            if ((float)alreadyElapsedTime > 0) {
+            if (alreadyElapsedTime > Time.Zero) {
                 Tick(alreadyElapsedTime);
             }
         }
@@ -135,7 +135,7 @@
             PreviousNode = path.Nodes[Idx];
             NextNode = path.Nodes[Idx + 1];
             Info = path.Infos[Idx];
-            CurrentWait.Seconds = PreviousNode.Info.TimePenalties.ContainsKey(Info.Type) ? PreviousNode.Info.TimePenalties[Info.Type].Seconds : 0;
+            CurrentWait = PreviousNode.Info.TimePenalties.ContainsKey(Info.Type) ? new Time(PreviousNode.Info.TimePenalties[Info.Type]) : Time.Zero;
             Position = PreviousNode.WorldPosition;
             Trace.Add(Position);
             IsMoving = true;

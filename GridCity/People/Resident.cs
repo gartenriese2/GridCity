@@ -53,7 +53,7 @@
             }
 
             var next = Activities.First();
-            if (next.Date.CurrentDay == date.CurrentDay && date.CurrentClock.GetDifference(next.Date.CurrentClock).Seconds < 5) {
+            if (next.Date.CurrentDay == date.CurrentDay && Math.Abs((float)date.CurrentClock.GetDifferenceInTicks(next.Date.CurrentClock) / TimeSpan.TicksPerSecond) < 5f) {
                 Agent.Dispatch(next.Path);
                 Activities.Enqueue(Activities.Dequeue());
             }

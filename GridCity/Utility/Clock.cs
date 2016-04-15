@@ -6,74 +6,67 @@
 
     internal class Clock : ITickable {
 
-        private readonly float secondsADay = 60 * 60 * 24;
-
-        public Clock(uint hour, uint minute = 0, uint second = 0) {
-            Debug.Assert(minute < 60 && second < 60, "minute and second must be smaller than 60");
-            Time.Seconds = second + (60 * minute) + (3600 * hour);
-            if (Time.Seconds > secondsADay) {
-                Time.Seconds %= secondsADay;
+        public Clock(uint hours, uint minutes = 0, uint seconds = 0) {
+            if (hours > 23) {
+                Console.WriteLine("Warning: Constructing a clock from more than 23 hours");
             }
+
+            if (minutes > 59) {
+                Console.WriteLine("Warning: Constructing a clock from more than 59 minutes");
+            }
+
+            if (seconds > 59) {
+                Console.WriteLine("Warning: Constructing a clock from more than 59 seconds");
+            }
+
+            TimeSpan = new TimeSpan((int)hours, (int)minutes, (int)seconds);
         }
 
-        public Clock(Time seconds) {
-            Time = seconds;
-            if (Time.Seconds > secondsADay) {
-                Time.Seconds %= secondsADay;
-            }
+        private Clock(long ticks) {
+            TimeSpan = new TimeSpan(ticks);
         }
 
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        public int Hour => ((int)Math.Floor((float)Time) / 3600) % 24;
+        public static Clock Zero => new Clock(0);
 
-        public int Minute => ((int)Math.Floor((float)Time) % 3600) / 60;
+        public int Hours => TimeSpan.Hours;
 
-        public int Second => (int)Math.Floor((float)Time) % 60;
+        public int Minutes => TimeSpan.Minutes;
 
-        private Time Time { get; set; } = new Time(0);
+        public int Seconds => TimeSpan.Seconds;
+
+        private TimeSpan TimeSpan { get; set; } = TimeSpan.Zero;
 
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
         public static Clock CreateRandomClockBetween(Clock c1, Clock c2) {
-            float diff = Math.Abs(c1.Time.Seconds - c2.Time.Seconds);
-            double random = Utility.RandomGenerator.Get();
-            float offset = diff * (float)random;
-            return new Clock(new Time(Math.Min(c1.Time.Seconds, c2.Time.Seconds) + offset));
+            long diffTicks = Math.Abs(c1.TimeSpan.Ticks - c2.TimeSpan.Ticks);
+            long offsetTicks = (long)(diffTicks * (float)RandomGenerator.Get());
+            return new Clock(Math.Min(c1.TimeSpan.Ticks, c2.TimeSpan.Ticks) + offsetTicks);
         }
 
         public static Clock operator +(Clock c, Time t) {
-            return new Clock(c.Time + t);
+            return new Clock(c.TimeSpan.Ticks + t.Ticks);
         }
 
         public static Clock operator -(Clock c, Time t) {
-            Debug.Assert(c.Time >= t, "Can't subtract a time from a time that is smaller");
-            return new Clock(c.Time - t);
+            Debug.Assert(c.TimeSpan.Ticks >= t.Ticks, "Can't subtract a time from a time that is smaller");
+            return new Clock(c.TimeSpan.Ticks - t.Ticks);
         }
 
         public override string ToString() {
-            var hours = Hour;
-            var minutes = Minute;
-            var seconds = Second;
-            return (hours < 10 ? "0" : string.Empty) + hours + ":" + (minutes < 10 ? "0" : string.Empty) + minutes + ":" + (seconds < 10 ? "0" : string.Empty) + seconds;
+            return TimeSpan.ToString(@"hh\:mm\:ss");
         }
 
-        public Time GetDifference(Clock other) {
-            if (other.Time <= Time) {
-                return Time - other.Time;
-            } else {
-                return new Time(secondsADay - (other.Time - Time).Seconds);
-            }
+        public long GetDifferenceInTicks(Clock other) {
+            return TimeSpan.Ticks - other.TimeSpan.Ticks;
         }
         
-        public bool Tick(Time elapsed) {
-            Time += elapsed;
-            if (Time.Seconds > secondsADay) {
-                Time.Seconds %= secondsADay;
-            }
-
+        public bool Tick(Time elapsedTime) {
+            TimeSpan = new TimeSpan(TimeSpan.Ticks + elapsedTime.Ticks);
             return true;
         }
     }

@@ -130,7 +130,7 @@
                 Dictionary<Pathfinding.NodeInfo.AllowedType, Utility.Units.Time> penalties = new Dictionary<Pathfinding.NodeInfo.AllowedType, Utility.Units.Time>();
                 var penaltyElements = from e3 in nodeElement.Elements("penalty") select e3;
                 foreach (var penaltyElement in penaltyElements) {
-                    var penalty = new Utility.Units.Time(float.Parse(penaltyElement.Value, CultureInfo.InvariantCulture));
+                    var penalty = Utility.Units.Time.FromSeconds(float.Parse(penaltyElement.Value, CultureInfo.InvariantCulture));
                     penalties.Add(Pathfinding.NodeInfo.StringToAllowedType(penaltyElement.Attribute("type").Value), penalty);
                 }
 

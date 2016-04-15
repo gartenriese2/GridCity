@@ -50,7 +50,7 @@
         }
 
         public static Distance operator *(Speed v, Time t) {
-            return new Distance(t.Seconds * v.MS);
+            return new Distance((float)t.Seconds * v.MS);
         }
 
         public override string ToString() {
