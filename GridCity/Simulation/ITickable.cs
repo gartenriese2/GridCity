@@ -1,12 +1,10 @@
-﻿namespace GridCity {
-
-    using Utility.Units;
+﻿namespace GridCity.Simulation {
 
     internal interface ITickable {
 
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
-        bool Tick(Time elapsedTime);
+        bool Tick(Utility.Units.Time elapsedTime);
     }
 }

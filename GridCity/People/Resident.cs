@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fields.Buildings;
+    using Simulation.Time;
     using Utility.Units;
     
     internal abstract class Resident {

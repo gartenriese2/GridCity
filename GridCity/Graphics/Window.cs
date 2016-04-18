@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Pencil.Gaming;
     using Pencil.Gaming.Graphics;
+    using Simulation;
     using Utility.Units;
 
     internal class Window : ITickable {

@@ -1,4 +1,4 @@
-﻿namespace GridCity {
+﻿namespace GridCity.Scene {
 
     using System;
     using System.Collections.Generic;
@@ -10,9 +10,9 @@
     using People;
     using Utility;
 
-    internal class Scene {
+    internal class SceneDescription {
 
-        public Scene(uint gridWidth, uint gridHeight) {
+        public SceneDescription(uint gridWidth, uint gridHeight) {
             Grid = new Grid(gridWidth, gridHeight);
             InitRoads();
             InitBuildings();

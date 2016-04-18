@@ -1,8 +1,7 @@
-﻿namespace GridCity {
+﻿namespace GridCity.Simulation.Time {
 
     using System;
     using System.Diagnostics;
-    using Utility;
     using Utility.Units;
 
     internal class Date : ITickable {

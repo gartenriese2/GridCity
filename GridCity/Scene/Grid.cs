@@ -1,8 +1,9 @@
-﻿namespace GridCity.Fields {
+﻿namespace GridCity.Scene {
 
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using Fields;
 
     internal class Grid {
 

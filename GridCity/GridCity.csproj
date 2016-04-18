@@ -185,7 +185,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Date.cs" />
+    <Compile Include="Simulation\Time\Date.cs" />
     <Compile Include="Fields\Buildings\Building.cs" />
     <Compile Include="Fields\Buildings\OccupationalBuilding.cs" />
     <Compile Include="Fields\Buildings\ResidentialBuilding.cs" />
@@ -195,7 +195,7 @@
     <Compile Include="Fields\ConnectableField.cs" />
     <Compile Include="Fields\EmptyField.cs" />
     <Compile Include="Fields\Field.cs" />
-    <Compile Include="Fields\Grid.cs" />
+    <Compile Include="Scene\Grid.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Gl\Buffer.cs" />
@@ -211,7 +211,7 @@
     <Compile Include="GUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ITickable.cs" />
+    <Compile Include="Simulation\ITickable.cs" />
     <Compile Include="Pathfinding\NodeInfo.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
@@ -226,7 +226,7 @@
     <Compile Include="People\Traveller.cs" />
     <Compile Include="People\Unemployed.cs" />
     <Compile Include="People\Worker.cs" />
-    <Compile Include="Scene.cs" />
+    <Compile Include="Scene\SceneDescription.cs" />
     <Compile Include="Pathfinding\Path.cs" />
     <Compile Include="People\Household.cs" />
     <Compile Include="People\Occupation.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="Fields\Roads\Road.cs" />
     <Compile Include="Fields\FieldFactory.cs" />
     <Compile Include="People\Resident.cs" />
-    <Compile Include="Utility\Clock.cs" />
+    <Compile Include="Simulation\Time\Clock.cs" />
     <Compile Include="Utility\Coordinate.cs" />
     <Compile Include="Utility\GlobalCoordinate.cs" />
     <Compile Include="Utility\LocalCoordinate.cs" />

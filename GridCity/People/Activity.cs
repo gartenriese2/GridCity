@@ -1,5 +1,7 @@
 ﻿namespace GridCity.People {
 
+    using Simulation.Time;
+
     internal struct Activity {
 
         //---------------------------------------------------------------------

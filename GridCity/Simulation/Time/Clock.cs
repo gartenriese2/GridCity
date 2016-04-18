@@ -1,8 +1,9 @@
-﻿namespace GridCity.Utility {
+﻿namespace GridCity.Simulation.Time {
 
     using System;
     using System.Diagnostics;
-    using Units;
+    using Utility;
+    using Utility.Units;
 
     internal class Clock : ITickable {
 

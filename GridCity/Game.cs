@@ -12,6 +12,7 @@
     using Pencil.Gaming.Graphics;
     using Pencil.Gaming.MathUtils;
     using Properties;
+    using Simulation.Time;
     using Utility;
     using Utility.Units;
     
@@ -59,7 +60,7 @@
 
         private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
 
-        private Scene Scene { get; set; }
+        private Scene.SceneDescription Scene { get; set; }
 
         private Window Window { get; set; }
 
@@ -91,7 +92,7 @@
             Console.WriteLine("Graphics initialization took " + sw.ElapsedMilliseconds + "ms");
 
             sw.Restart();
-            Scene = new Scene(gridWidth, gridHeight);
+            Scene = new Scene.SceneDescription(gridWidth, gridHeight);
             sw.Stop();
             Console.WriteLine("Scene initialization took " + sw.ElapsedMilliseconds + "ms");
 
