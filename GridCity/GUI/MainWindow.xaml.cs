@@ -1,7 +1,6 @@
 ﻿namespace GridCity.GUI {
 
     using System;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Threading.Tasks;
     using System.Windows;
@@ -50,12 +49,14 @@
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             if (!isLoaded) {
                 isLoaded = true;
+                Hide();
                 Task.Run(() => GameTask(CalculatedWidth, CalculatedHeight, offset));
             }
         }
 
         private void GameTask(uint width, uint height, uint borderSize) {
             Game.Init(20, 20, width, height, borderSize, borderSize);
+            Dispatcher.InvokeAsync(() => Show());
             Game.Loop();
             Environment.Exit(0);
         }
