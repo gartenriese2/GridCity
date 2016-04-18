@@ -262,6 +262,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Paths.xml" />
+    <Resource Include="Resources\splashscreen.png" />
     <None Include="Resources\Textures\Loading3.bmp" />
     <None Include="Resources\Textures\Loading2.bmp" />
     <None Include="Resources\Textures\Loading1.bmp" />
