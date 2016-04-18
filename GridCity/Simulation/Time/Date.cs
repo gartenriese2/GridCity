@@ -6,13 +6,22 @@
 
     internal class Date : ITickable {
 
+        //---------------------------------------------------------------------
+        // Fields
+        //---------------------------------------------------------------------
         public readonly uint SecondsADay = 60 * 60 * 24;
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Date(Weekday day, Clock time) {
             CurrentClock = time;
             CurrentDay = day;
         }
 
+        //---------------------------------------------------------------------
+        // Enumerations
+        //---------------------------------------------------------------------
         public enum Weekday {
             MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
         }
@@ -24,8 +33,6 @@
 
         public Weekday CurrentDay { get; set; } = Weekday.MONDAY;
 
-        public uint SpeedFactor { get; set; } = 1;
-
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
@@ -36,7 +43,7 @@
         public bool Tick(Time elapsedTime) {
             Debug.Assert(elapsedTime.Seconds < SecondsADay, "elapsed seconds should not be more than a whole day");
             var oldHour = CurrentClock.Hours;
-            CurrentClock += Time.FromSeconds((float)(SpeedFactor * elapsedTime.Seconds));
+            CurrentClock += elapsedTime;
             if (oldHour > CurrentClock.Hours) {
                 CurrentDay = GetNextDay(CurrentDay);
             }

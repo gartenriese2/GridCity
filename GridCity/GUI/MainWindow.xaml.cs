@@ -7,6 +7,9 @@
 
     public partial class MainWindow : Window {
 
+        //-------------------------------------------------------------------------
+        // Fields
+        //-------------------------------------------------------------------------
         private readonly uint offset = 100u;
 
         private readonly uint minWidth = 640u;
@@ -15,9 +18,11 @@
 
         private bool isLoaded = false;
 
+        //-------------------------------------------------------------------------
+        // Constructors
+        //-------------------------------------------------------------------------
         public MainWindow() {
             InitializeComponent();
-            DataContext = Game;
 
             int width = (int)SystemParameters.PrimaryScreenWidth;
             int height = (int)SystemParameters.PrimaryScreenHeight;
@@ -32,6 +37,8 @@
             Topmost = true;
             Top = offset;
             Left = offset;
+
+            dataInfoView.DataContext = new DateInfoViewModel(Game.DateInfoModel);
         }
 
         //-------------------------------------------------------------------------
@@ -59,14 +66,6 @@
             Dispatcher.InvokeAsync(() => Show());
             Game.Loop();
             Environment.Exit(0);
-        }
-
-        private void ButtonMinus_Click(object sender, RoutedEventArgs e) {
-            Game.TrySubtractSpeed();
-        }
-
-        private void ButtonPlus_Click(object sender, RoutedEventArgs e) {
-            Game.TryAddSpeed();
         }
     }
 }

@@ -1,93 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="640"
-   height="480"
-   viewBox="0 0 640.00001 480.00001"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="splashscreen.svg">
-  <defs
-     id="defs4" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="28.001488"
-     inkscape:cy="282.54659"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1138"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata7">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Ebene 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-572.36216)">
-    <rect
-       style="fill:#00a0b0;fill-rule:evenodd;stroke:#000000;stroke-width:0.99818015px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:0.49803922"
-       id="rect3340"
-       width="639.00201"
-       height="479.00183"
-       x="0.49909008"
-       y="572.86121" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:80px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#5a5a5a;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
-       x="156.7579"
-       y="834.70587"
-       id="text4142"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4144"
-         x="156.7579"
-         y="834.70587"
-         style="fill:#5a5a5a;fill-opacity:1;">GridCity</tspan><tspan
-         sodipodi:role="line"
-         x="156.7579"
-         y="934.70587"
-         style="fill:#5a5a5a;fill-opacity:1;"
-         id="tspan4146" /></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="160.80331"
-       y="886.69714"
-       id="text4148"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4150"
-         x="160.80331"
-         y="886.69714">v0.1.5</tspan></text>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1"
+	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="splashscreen.svg" inkscape:version="0.91 r13725"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="14 157 640 480"
+	 style="enable-background:new 14 157 640 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#00A0B0;fill-opacity:0.498;stroke:#000000;stroke-width:0.9982;}
+	.st1{font-family:'ArialMT';}
+	.st2{font-size:80px;}
+	.st3{font-size:15px;}
+</style>
+<sodipodi:namedview  inkscape:cy="282.54659" pagecolor="#ffffff" units="px" showgrid="false" inkscape:cx="28.001488" inkscape:zoom="0.98994949" bordercolor="#666666" borderopacity="1.0" id="base" inkscape:window-maximized="1" inkscape:window-y="-8" inkscape:current-layer="layer1" inkscape:document-units="px" inkscape:pageshadow="2" inkscape:pageopacity="0.0" inkscape:window-x="-8" inkscape:window-width="1920" inkscape:window-height="1138">
+	</sodipodi:namedview>
+<g id="layer1" transform="translate(0,-572.36216)" inkscape:label="Ebene 1" inkscape:groupmode="layer">
+	<rect id="rect3340" x="14.5" y="729.9" class="st0" width="639" height="479"/>
+	<text transform="matrix(1 0 0 1 170.7579 991.7059)" class="st1 st2">GridCity</text>
+	<text transform="matrix(1 0 0 1 174.8033 1043.6971)" class="st1 st3">v0.1.6</text>
+</g>
 </svg>

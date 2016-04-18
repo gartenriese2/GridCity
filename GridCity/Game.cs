@@ -2,13 +2,13 @@
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using Fields;
     using Graphics;
     using Graphics.Gl;
+    using GUI;
     using Pencil.Gaming.Graphics;
     using Pencil.Gaming.MathUtils;
     using Properties;
@@ -16,47 +16,27 @@
     using Utility;
     using Utility.Units;
     
-    internal class Game : INotifyPropertyChanged {
+    internal class Game {
 
-        private string dateOutput = "NaN";
-
-        private string speedOutput = ">";
-
+        //---------------------------------------------------------------------
+        // Fields
+        //---------------------------------------------------------------------
         private bool isInitialized = false;
 
         //---------------------------------------------------------------------
-        // Events
+        // Constructors
         //---------------------------------------------------------------------
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Game() {
+            DateInfoModel = new DateInfoModel();
+            SpeedFactor = DateInfoModel.SpeedFactor;
+        }
 
         //---------------------------------------------------------------------
         // Properties
         //---------------------------------------------------------------------
-        public string DateOutput {
-            get {
-                return dateOutput;
-            }
+        public DateInfoModel DateInfoModel { get; }
 
-            set {
-                if (dateOutput != value) {
-                    dateOutput = value;
-                    NotifyPropertyChanged(nameof(DateOutput));
-                }
-            }
-        }
-
-        public string SpeedOutput {
-            get {
-                return speedOutput;
-            }
-
-            set {
-                if (speedOutput != value) {
-                    speedOutput = value;
-                    NotifyPropertyChanged(nameof(SpeedOutput));
-                }
-            }
-        }
+        private SpeedFactor SpeedFactor { get; }
 
         private Date Date { get; } = new Date(Date.Weekday.MONDAY, new Clock(5));
 
@@ -123,39 +103,35 @@
                 Time elapsedTime = Time.FromMilliseconds(ms);
 
                 /*
-                 *  Date
-                 */
-                Date.Tick(elapsedTime);
-                if (DateOutput != Date.ToString()) {
-                    DateOutput = Date.ToString();
-                }
-
-                /*
                  *  Simulation
                  */
-                var simulatedSeconds = elapsedTime * Date.SpeedFactor;
+                var simulatedTime = elapsedTime * SpeedFactor.Value;
+
+                Date.Tick(simulatedTime);
+                DateInfoModel.Date = Date.ToString();
+
                 var rbs = Scene.Grid.GetFields<Fields.Buildings.ResidentialBuilding>();
                 foreach (var rb in rbs) {
                     foreach (var hh in rb.Households) {
                         foreach (var res in hh.Residents) {
-                            res.CheckTime(simulatedSeconds, Date);
+                            res.CheckTime(simulatedTime, Date);
                         }
                     }
                 }
 
                 foreach (var agent in People.Agent.Agents) {
-                    agent.Tick(simulatedSeconds);
+                    agent.Tick(simulatedTime);
                 }
 
                 /*
                  *  Input
                  */
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageUp)) {
-                    TryAddSpeed();
+                    DateInfoModel.TryAddSpeed();
                 }
 
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.PageDown)) {
-                    TrySubtractSpeed();
+                    DateInfoModel.TrySubtractSpeed();
                 }
 
                 if (Window.QueryPressedKey(Pencil.Gaming.Key.Left)) {
@@ -185,30 +161,6 @@
                     break;
                 }
             }
-        }
-
-        public bool TryAddSpeed() {
-            if (Date.SpeedFactor < 2048) {
-                Date.SpeedFactor *= 2;
-                SetSpeedString();
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool TrySubtractSpeed() {
-            if (Date.SpeedFactor > 1) {
-                Date.SpeedFactor /= 2;
-                SetSpeedString();
-                return true;
-            }
-
-            return false;
-        }
-
-        protected virtual void NotifyPropertyChanged(string propertyName) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void InitScene() {
@@ -280,15 +232,6 @@
                     DrawTexture(agent.Texture);
                 }
             }
-        }
-
-        private void SetSpeedString() {
-            string str = string.Empty;
-            for (int i = 1; i <= Date.SpeedFactor; i *= 2) {
-                str += ">";
-            }
-
-            SpeedOutput = str;
         }
     }
 }
