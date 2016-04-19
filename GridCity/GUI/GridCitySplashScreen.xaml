@@ -1,6 +1,8 @@
 ﻿<Window x:Class="GridCity.GUI.GridCitySplashScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="640"
+        Height="480"
         ShowInTaskbar="False" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
@@ -8,9 +10,7 @@
         Background="Transparent" 
         AllowsTransparency="True"
         Title="GridCity Splash Screen" 
-        Topmost="True" 
-        Width="640"
-        Height="480">
+        Topmost="True">
 
     <Border CornerRadius="64" Margin="64">
         <Border.Background>

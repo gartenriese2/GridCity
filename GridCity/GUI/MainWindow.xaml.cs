@@ -22,8 +22,6 @@
         // Constructors
         //-------------------------------------------------------------------------
         public MainWindow() {
-            SplashScreen.Show();
-
             InitializeComponent();
             Hide();
 
@@ -53,7 +51,7 @@
 
         private Game Game { get; set; } = new Game();
 
-        private GridCitySplashScreen SplashScreen { get; } = new GridCitySplashScreen();
+        private GridCitySplashScreen SplashScreen { get; } = new GridCitySplashScreen(true);
 
         //-------------------------------------------------------------------------
         // Methods

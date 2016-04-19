@@ -284,7 +284,7 @@
             foreach (var resident in residents) {
                 if (resident is Worker) {
                     if (!FindOccupation(resident as Worker, wbs)) {
-                        throw new Exception("Worker did not find a job");
+                        throw new Exception("Worker did not find a job"); // TODO: prevent from occasionally throwing
                     }
                 } else if (resident is Teen) {
                     if (!FindOccupation(resident as Teen, sbs)) {
