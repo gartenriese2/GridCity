@@ -5,6 +5,9 @@
 
     internal class Buffer {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         protected Buffer(BufferTarget target) {
             Handle = GL.GenBuffer();
             Target = target;

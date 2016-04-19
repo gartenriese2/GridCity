@@ -9,6 +9,9 @@
 
     internal class FieldFactory {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public FieldFactory() {
             FieldsDoc = XDocument.Parse(Properties.Resources.Fields);
             NodesDoc = XDocument.Parse(Properties.Resources.Nodes);

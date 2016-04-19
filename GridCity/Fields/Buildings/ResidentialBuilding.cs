@@ -7,6 +7,9 @@
 
     internal class ResidentialBuilding : Building {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public ResidentialBuilding(string name, Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, uint numHouseholds, Tuple<uint, uint> size) : base(pos, layout, orientation, name, size) {
             for (uint i = 0; i < numHouseholds; ++i) {
                 Households.Add(Household.GetRandomHousehold(this));

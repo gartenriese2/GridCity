@@ -9,11 +9,17 @@
     
     internal abstract class Resident {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         protected Resident(ResidentialBuilding home) {
             Home = home;
             Traveller.Keys.AddRange(Home.Nodes);
         }
 
+        //---------------------------------------------------------------------
+        // Enumerations
+        //---------------------------------------------------------------------
         public enum Type {
             WORKER, TEEN, STUDENT
         }

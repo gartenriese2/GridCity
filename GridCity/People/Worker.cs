@@ -7,6 +7,9 @@
 
     internal class Worker : Occupant {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Worker(ResidentialBuilding home) : base(home) {
             Traveller.NonReusableTypes.Add(Pathfinding.NodeInfo.AllowedType.CAR);
         }

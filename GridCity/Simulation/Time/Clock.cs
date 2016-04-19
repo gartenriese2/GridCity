@@ -7,6 +7,9 @@
 
     internal class Clock : ITickable {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Clock(uint hours, uint minutes = 0, uint seconds = 0) {
             if (hours > 23) {
                 Console.WriteLine("Warning: Constructing a clock from more than 23 hours");

@@ -4,6 +4,9 @@
 
     internal class Time : IComparable {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Time(Time other) : this(other.Ticks) {
         }
 

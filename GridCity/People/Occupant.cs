@@ -7,6 +7,10 @@
     using Utility.Units;
 
     internal abstract class Occupant : Resident {
+
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Occupant(ResidentialBuilding home) : base(home) {
         }
 

@@ -6,11 +6,17 @@
 
         public static readonly uint Scale = 8;
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Field(uint x, uint y) {
             IsEmpty = true;
             Position = new Utility.GlobalCoordinate(x, y);
         }
 
+        //---------------------------------------------------------------------
+        // Enumerations
+        //---------------------------------------------------------------------
         public enum Border {
             LEFT, TOP, RIGHT, BOTTOM
         }

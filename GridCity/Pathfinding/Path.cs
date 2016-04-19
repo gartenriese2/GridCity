@@ -4,6 +4,10 @@
     using System.Diagnostics.Contracts;
 
     internal struct PathInfo {
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
         public NodeInfo.AllowedType Type { get; set; }
 
         public Utility.Units.Speed Speed { get; set; }
@@ -13,6 +17,9 @@
 
     internal class Path {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Path(List<Node> nodes, List<PathInfo> infos) {
             Contract.Requires(nodes != null && infos != null && nodes.Count == infos.Count + 1);
             Nodes = nodes;

@@ -12,6 +12,9 @@
 
     internal class SceneDescription {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public SceneDescription(uint gridWidth, uint gridHeight) {
             Grid = new Grid(gridWidth, gridHeight);
             InitRoads();

@@ -7,6 +7,9 @@
 
     internal class Grid {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Grid(uint x, uint y) {
             Size = Tuple.Create(x, y);
             Fields = new List<Field>();

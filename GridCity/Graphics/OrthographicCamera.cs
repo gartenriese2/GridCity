@@ -4,6 +4,9 @@
 
     internal class OrthographicCamera : Camera {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public OrthographicCamera(Vector3 pos, float width, float height, float near, float far) : base(pos) {
             Width = width;
             Height = height;

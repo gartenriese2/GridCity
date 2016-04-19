@@ -2,6 +2,9 @@
 
     internal class EmptyField : Field {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public EmptyField(Utility.GlobalCoordinate pos) : base(pos.X, pos.Y) {
             Texture = new Graphics.Texture("EmptyField");
         }

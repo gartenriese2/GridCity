@@ -8,8 +8,14 @@
     
     internal abstract class OccupationalBuilding : Building {
 
+        //---------------------------------------------------------------------
+        // Fields
+        //---------------------------------------------------------------------
         private readonly object locker = new object();
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public OccupationalBuilding(string name, Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, Dictionary<Resident.Type, uint> jobs, Tuple<uint, uint> size) : base(pos, layout, orientation, name, size) {
             foreach (var t in jobs) {
                 Occupations.Add(t.Key, new List<Occupation>());

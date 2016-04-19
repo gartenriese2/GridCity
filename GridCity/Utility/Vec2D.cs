@@ -2,8 +2,11 @@
 
     using System;
 
-    internal struct Vec2D {
+    internal class Vec2D {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Vec2D(float x, float y) {
             X = x;
             Y = y;

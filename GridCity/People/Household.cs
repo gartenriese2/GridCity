@@ -6,6 +6,9 @@
 
     internal class Household {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Household(ResidentialBuilding rb, List<Resident> residents) {
             Building = rb;
             Residents = residents;

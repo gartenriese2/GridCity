@@ -7,6 +7,9 @@
 
     internal class Teen : Occupant {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Teen(ResidentialBuilding home) : base(home) {
         }
 

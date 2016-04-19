@@ -8,6 +8,9 @@
 
     internal class Student : Occupant {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Student(ResidentialBuilding home) : base(home) {
         }
 

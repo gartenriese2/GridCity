@@ -6,6 +6,9 @@
     
     internal class IndexBuffer : Buffer {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public IndexBuffer(params int[] data) : base(BufferTarget.ElementArrayBuffer) {
             Debug.Assert(data.Length > 2, "There must be at least 3 indices");
             GL.BindBuffer(Target, Handle);

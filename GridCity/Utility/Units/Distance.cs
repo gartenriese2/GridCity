@@ -4,6 +4,9 @@
 
     internal class Distance : IComparable {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Distance(float meters) {
             Meters = meters;
         }

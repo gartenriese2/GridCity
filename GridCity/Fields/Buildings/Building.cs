@@ -5,6 +5,9 @@
 
     internal abstract class Building : ConnectableField {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Building(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, string name, Tuple<uint, uint> size) : base(pos, layout, orientation) {
             Name = name;
             Size = size;
@@ -27,6 +30,9 @@
             Texture = new GridCity.Graphics.Texture(Name + "_" + orientation.ToString(), tex);
         }
 
+        //---------------------------------------------------------------------
+        // Enumerations
+        //---------------------------------------------------------------------
         public enum Type {
             RESIDENTIAL, WORK, SCHOOL
         }

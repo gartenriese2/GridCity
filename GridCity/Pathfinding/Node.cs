@@ -5,6 +5,9 @@
 
     internal class Node {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Node(Utility.Coordinate pos, NodeInfo info) {
             WorldPosition = pos;
             Info = info;

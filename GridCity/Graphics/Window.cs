@@ -8,6 +8,9 @@
 
     internal class Window : ITickable {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Window(uint width, uint height, Utility.Coordinate position) {
             Width = (int)width;
             Height = (int)height;

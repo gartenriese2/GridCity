@@ -5,6 +5,9 @@
 
     internal class Shader {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Shader(ShaderType type, string code) {
             if (!Allocate(type)) {
                 return;

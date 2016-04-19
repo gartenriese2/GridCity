@@ -4,6 +4,9 @@
 
     internal class Coordinate {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Coordinate(float x, float y) {
             if (x < 0f || y < 0f) {
                 throw new ArgumentOutOfRangeException("Coordinates cannot be negative");

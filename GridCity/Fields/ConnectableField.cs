@@ -6,12 +6,18 @@
 
     internal abstract class ConnectableField : Field {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         protected ConnectableField(Utility.GlobalCoordinate pos, BaseNodeLayout layout, Orientation_CW orientation) : base(pos.X, pos.Y) {
             IsEmpty = false;
             BaseLayout = layout;
             InitNodes(orientation);
         }
 
+        //---------------------------------------------------------------------
+        // Enumerations
+        //---------------------------------------------------------------------
         public enum Orientation_CW {
             ZERO, NINETY, ONEEIGHTY, TWOSEVENTY
         }

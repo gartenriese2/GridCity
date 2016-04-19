@@ -4,6 +4,9 @@
 
     internal class Road : ConnectableField {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         internal Road(Utility.GlobalCoordinate pos, Pathfinding.BaseNodeLayout layout, Orientation_CW orientation, Bitmap tex, string name) : base(pos, layout, orientation) {
             switch (orientation) {
                 case Orientation_CW.NINETY:

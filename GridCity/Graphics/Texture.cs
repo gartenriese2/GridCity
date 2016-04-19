@@ -8,6 +8,9 @@
     
     internal class Texture {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public Texture(string id, RotateFlipType rotateFlipType = RotateFlipType.RotateNoneFlipNone) {
             ID = id;
             if (!Map.ContainsKey(id)) {

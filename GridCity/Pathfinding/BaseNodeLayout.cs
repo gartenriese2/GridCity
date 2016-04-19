@@ -5,6 +5,9 @@
 
     internal class BaseNodeLayout {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public BaseNodeLayout(List<Utility.LocalCoordinate> coords, List<NodeInfo> nodeInfos, List<Tuple<int, int>> connections, List<PathInfo> pathInfos) {
             if (coords.Count != nodeInfos.Count) {
                 throw new ArgumentException("There are not the same amount of coordinates as there are node infos");

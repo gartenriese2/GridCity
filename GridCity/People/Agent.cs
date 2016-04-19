@@ -10,6 +10,9 @@
     
     internal class Agent : ITickable, IDrawable {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         private Agent() {
             Texture = new Texture("Agent");
         }

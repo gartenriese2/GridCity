@@ -6,6 +6,9 @@
 
     internal class VertexBuffer : Buffer {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public VertexBuffer(params float[] data) : base(BufferTarget.ArrayBuffer) {
             Debug.Assert(data.Length > 0, "Buffer must not be empty");
             GL.BindBuffer(Target, Handle);

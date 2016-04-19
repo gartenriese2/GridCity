@@ -3,7 +3,7 @@
     using System;
     using System.Windows.Input;
 
-    public class RelayCommand : ICommand {
+    internal class RelayCommand : ICommand {
 
         //---------------------------------------------------------------------
         // Fields

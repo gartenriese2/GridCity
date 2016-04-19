@@ -4,6 +4,9 @@
 
     internal class Camera {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         protected Camera(Vector3 pos) {
             Pos = pos;
             CreateViewMat();

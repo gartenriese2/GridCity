@@ -2,6 +2,9 @@
 
     internal class GlobalCoordinate {
 
+        //---------------------------------------------------------------------
+        // Constructors
+        //---------------------------------------------------------------------
         public GlobalCoordinate(uint x, uint y) {
             X = x;
             Y = y;
