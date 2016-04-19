@@ -22,7 +22,10 @@
         // Constructors
         //-------------------------------------------------------------------------
         public MainWindow() {
+            SplashScreen.Show();
+
             InitializeComponent();
+            Hide();
 
             int width = (int)SystemParameters.PrimaryScreenWidth;
             int height = (int)SystemParameters.PrimaryScreenHeight;
@@ -50,19 +53,22 @@
 
         private Game Game { get; set; } = new Game();
 
+        private GridCitySplashScreen SplashScreen { get; } = new GridCitySplashScreen();
+
         //-------------------------------------------------------------------------
         // Methods
         //-------------------------------------------------------------------------
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             if (!isLoaded) {
                 isLoaded = true;
-                Hide();
                 Task.Run(() => GameTask(CalculatedWidth, CalculatedHeight, offset));
             }
         }
 
         private void GameTask(uint width, uint height, uint borderSize) {
-            Game.Init(20, 20, width, height, borderSize, borderSize);
+            Game.InitGraphics(20, 20, width, height, borderSize, borderSize);
+            Dispatcher.InvokeAsync(() => SplashScreen.Close());
+            Game.InitSimulation(20, 20);
             Dispatcher.InvokeAsync(() => Show());
             Game.Loop();
             Environment.Exit(0);

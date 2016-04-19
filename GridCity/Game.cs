@@ -21,6 +21,8 @@
         //---------------------------------------------------------------------
         // Fields
         //---------------------------------------------------------------------
+        private bool graphicsInitialized = false;
+
         private bool isInitialized = false;
 
         //---------------------------------------------------------------------
@@ -55,10 +57,10 @@
         //---------------------------------------------------------------------
         // Methods
         //---------------------------------------------------------------------
-        public void Init(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight, uint windowPosX, uint windowPosY) {
+        public void InitGraphics(uint gridWidth, uint gridHeight, uint windowWidth, uint windowHeight, uint windowPosX, uint windowPosY) {
             Stopwatch sw = new Stopwatch();
-
             sw.Start();
+
             Window = new Window(windowWidth, windowHeight, new Coordinate(windowPosX, windowPosY));
             Prog = new Program();
             Prog.AttachShaders(new Shader(ShaderType.VertexShader, Resources.test_vert), new Shader(ShaderType.FragmentShader, Resources.test_frag));
@@ -68,10 +70,21 @@
             LoadingTextures.Add(new Texture("Loading1", System.Drawing.RotateFlipType.RotateNoneFlipY));
             LoadingTextures.Add(new Texture("Loading2", System.Drawing.RotateFlipType.RotateNoneFlipY));
             LoadingTextures.Add(new Texture("Loading3", System.Drawing.RotateFlipType.RotateNoneFlipY));
+            Window.Show();
+            graphicsInitialized = true;
+
             sw.Stop();
             Console.WriteLine("Graphics initialization took " + sw.ElapsedMilliseconds + "ms");
+        }
 
-            sw.Restart();
+        public void InitSimulation(uint gridWidth, uint gridHeight) {
+            if (!graphicsInitialized) {
+                throw new InvalidOperationException("Cannot initialize simulation of graphics are not initialized");
+            }
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             Scene = new Scene.SceneDescription(gridWidth, gridHeight);
             sw.Stop();
             Console.WriteLine("Scene initialization took " + sw.ElapsedMilliseconds + "ms");
@@ -90,7 +103,9 @@
         }
 
         public void Loop() {
-            Debug.Assert(isInitialized, "Game is not initialized!");
+            if (!isInitialized) {
+                throw new InvalidOperationException("Cannot start with the game loop if the game is not initialized");
+            }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
             while (true) {

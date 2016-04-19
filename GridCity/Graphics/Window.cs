@@ -17,6 +17,7 @@
             Position = position;
             Glfw.Init();
             Ptr = Glfw.CreateWindow((int)width, (int)height, "GridCity", GlfwMonitorPtr.Null, GlfwWindowPtr.Null);
+            Glfw.HideWindow(Ptr);
             MakeCurrent();
             Glfw.SetWindowPos(Ptr, (int)Position.X, (int)Position.Y);
 
@@ -46,6 +47,11 @@
         //---------------------------------------------------------------------
         public void MakeCurrent() {
             Glfw.MakeContextCurrent(Ptr);
+        }
+
+        public void Show()
+        {
+            Glfw.ShowWindow(Ptr);
         }
 
         public bool Tick(Time elapsedTime) {

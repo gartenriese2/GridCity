@@ -253,6 +253,9 @@
     <Compile Include="People\Resident.cs" />
     <Compile Include="Simulation\Time\Clock.cs" />
     <Compile Include="Simulation\Time\SpeedFactor.cs" />
+    <Compile Include="GUI\GridCitySplashScreen.xaml.cs">
+      <DependentUpon>GridCitySplashScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Coordinate.cs" />
     <Compile Include="Utility\GlobalCoordinate.cs" />
     <Compile Include="Utility\LocalCoordinate.cs" />
@@ -271,7 +274,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Paths.xml" />
-    <Resource Include="Resources\splashscreen.png" />
     <None Include="Resources\Textures\Loading3.bmp" />
     <None Include="Resources\Textures\Loading2.bmp" />
     <None Include="Resources\Textures\Loading1.bmp" />
@@ -306,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\GridCitySplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

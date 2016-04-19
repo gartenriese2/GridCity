@@ -178,7 +178,4 @@
   <data name="Loading3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Textures\Loading3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="splashscreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\splashscreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

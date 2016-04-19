@@ -240,16 +240,6 @@ namespace GridCity.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap splashscreen {
-            get {
-                object obj = ResourceManager.GetObject("splashscreen", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap StraightRoad {
             get {
                 object obj = ResourceManager.GetObject("StraightRoad", resourceCulture);
